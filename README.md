@@ -2,5 +2,5 @@
 Crud Application with Xamaring Forms as fronted in mobile and Blazor Server in web. WCF as service, Database Sql Server with EF core
 
 
-<img src="https://raw.githubusercontent.com/DariuszTom/OneTrackerApp/master/Presentation.gif" width="50%" height="50%"/>
+<img src="https://raw.githubusercontent.com/DariuszTom/OneTrackerApp/master/Presentation.gif" width="80%" height="80%"/>
 
