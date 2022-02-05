@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:OneTrackerMobile.ViewModels"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="OneTrackerMobile.Views.NewDepartmentPage"
+             x:DataType="viewmodel:NewDepartmentViewModel"
+             Visual="Material">
+    <ContentPage.BindingContext>
+        <viewmodel:NewDepartmentViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="70*" />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="7*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Padding="1">
+                <StackLayout Orientation="Horizontal" Background="{StaticResource Blazor}" Padding="2" Spacing="1">
+                    <material:MaterialIcon Source="sitemap.png" TintColor="WhiteSmoke" WidthRequest="20" Margin="4" />
+                    <Label Text="Add Department" Style="{StaticResource MainLabel }" />
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Frame Style="{StaticResource  MyInputFrame}">
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Department Name" Padding="1" />
+                        <material:MaterialTextField Placeholder="Your Departament name" HelperText="Please provide Department name"
+                                                ErrorText="Invalid input" Text="{Binding WorkItem.DepName}" InputType="Text" ShouldAnimateUnderline="True" />
+                    </StackLayout>
+                </Frame>
+            </Grid>
+            <Grid Grid.Row="2">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Status:" Style="{StaticResource StatusLabel}" />
+                    <Label Text="{Binding Status, Mode=OneWay}" Style="{StaticResource StatusLabel}" />
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="3" HeightRequest="40">
+                <material:MaterialButton Text="{Binding Path=WhatToDo}" Command="{Binding AddOrUpdateItem}"
+                                             Style="{StaticResource MyMainAddButton}" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

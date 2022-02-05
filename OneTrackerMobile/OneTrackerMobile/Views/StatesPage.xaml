@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OneTrackerMobile.Views.StatesPage"
+             xmlns:viewmodel="clr-namespace:OneTrackerMobile.ViewModels"
+             xmlns:modelforview="clr-namespace:DbDataLibrary.Models;assembly=DbDataLibrary"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:DataType="viewmodel:StatesViewModel"
+             xmlns:expander="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
+             xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             Visual="Material">
+
+    <ContentPage.BindingContext>
+        <viewmodel:StatesViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="70*" />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="7*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Padding="1">
+                <StackLayout Orientation="Horizontal" Background="{StaticResource Blazor}" Padding="2" Spacing="1">
+                    <material:MaterialIcon Source="barchart.png" TintColor="WhiteSmoke" WidthRequest="20" Margin="4" />
+                    <Label Text="{Binding Title, Mode=OneTime}" Style="{StaticResource MainLabel }" />
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="1" RowDefinitions="auto, *">
+
+                <expander:SfExpander IsExpanded="False" Grid.Row="0">
+                    <expander:SfExpander.Header>
+                        <Grid Margin="2" Padding="2">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="&#xe8a4;" Style="{StaticResource IconLabel}" />
+                                <Label Text="Chart Setting" TextColor="#495F6E" FontSize="14" VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </Grid>
+                    </expander:SfExpander.Header>
+                    <expander:SfExpander.Content>
+                        <Frame Grid.Row="0" Style="{StaticResource MyInputFrame}">
+                            <Grid ColumnDefinitions="20,*">
+                                <Label Grid.Column="0" Text="&#xf233;" Style="{StaticResource IconLabel}" />
+                                <inputLayout:SfTextInputLayout HelperText="Select Dev Team" Grid.Column="1">
+                                    <combobox:SfComboBox
+                                                         DataSource="{Binding Path=StaticTbl.TeamForView, Mode=OneWay}" DisplayMemberPath="TeamName"
+                                                         SuggestionMode="StartsWith" ItemPadding="2" HeightRequest="55"
+                                                         SelectedValuePath="Id"
+                                                         SelectedValue="{Binding SeletedTeam, Mode=TwoWay}">
+                                        <combobox:SfComboBox.ItemTemplate>
+                                            <DataTemplate  x:DataType="modelforview:TeamForViewNew">
+                                                <StackLayout Orientation="Horizontal" Padding="2">
+                                                    <Label Text="{Binding TeamName}" Margin="2" />
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </combobox:SfComboBox.ItemTemplate>
+                                    </combobox:SfComboBox>
+                                </inputLayout:SfTextInputLayout>
+                            </Grid>
+                        </Frame>
+                    </expander:SfExpander.Content>
+                </expander:SfExpander>
+
+                <Grid Grid.Row="1" Padding="4">
+                    <chart:SfChart>
+
+                        <chart:SfChart.PrimaryAxis>
+
+                            <chart:CategoryAxis>
+
+                                <chart:CategoryAxis.Title>
+
+                                    <chart:ChartAxisTitle Text="Name"></chart:ChartAxisTitle>
+
+                                </chart:CategoryAxis.Title>
+
+                            </chart:CategoryAxis>
+
+                        </chart:SfChart.PrimaryAxis>
+
+                        <chart:SfChart.SecondaryAxis>
+
+                            <chart:NumericalAxis>
+
+                                <chart:NumericalAxis.Title>
+
+                                    <chart:ChartAxisTitle Text="Score"></chart:ChartAxisTitle>
+
+                                </chart:NumericalAxis.Title>
+
+                            </chart:NumericalAxis>
+
+                        </chart:SfChart.SecondaryAxis>
+
+                        <chart:SfChart.Series>
+
+                            <chart:ColumnSeries ItemsSource="{Binding RecordList}" XBindingPath="FullName" YBindingPath="Score"  EnableTooltip="True">
+                                <chart:ColumnSeries.ColorModel>
+
+                                    <chart:ChartColorModel Palette="Metro"/>
+
+                                </chart:ColumnSeries.ColorModel>
+                            </chart:ColumnSeries>
+
+                        </chart:SfChart.Series>
+
+                    </chart:SfChart>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Status:" Style="{StaticResource StatusLabel}" />
+                    <Label Text="{Binding Status, Mode=OneWay}" Style="{StaticResource StatusLabel}" />
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="3" HeightRequest="40">
+                <material:MaterialButton Text="Refresh" Command="{Binding LoadListCommand}"
+                                             Style="{StaticResource MyMainButton}" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

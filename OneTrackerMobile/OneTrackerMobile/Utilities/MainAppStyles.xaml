@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="OneTrackerMobile.Utilities.MainAppStyles"
+                    xmlns:segmentedcontrol="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+                    >
+    <!--Colors-->
+    <Color x:Key="Primary">#2196F3</Color>
+    <Color x:Key="MainColor">#FF3B0748</Color>
+    <Color x:Key="AccentColorMy">#FF4B14</Color>
+    <Color x:Key="BlackOpacityColorMy">#99253748</Color>
+    <Color x:Key="BlackTextColorMy">#253748</Color>
+    <Color x:Key="BackgroundColorMy">#F8F8F8</Color>
+    <Color x:Key="PinkColorMy">#ED0241</Color>
+    <Color x:Key="GrayColorMy">#ACB1B4</Color>
+    <Color x:Key="DarkColorMy">#203446</Color>
+    <Color x:Key="WhiteColorMy">#FFFFFF</Color>
+    <Color x:Key="GreenColorMy">#368F95</Color>
+    
+    <LinearGradientBrush x:Key="FioAzure" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFE18DFC" Offset="0" />
+        <GradientStop Color="#FF88D2FE" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BlackBlueC" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="Black" Offset="1" />
+        <GradientStop Color="#FF269BA0" Offset="2" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="Blazor" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF181B5C" Offset="0" />
+        <GradientStop Color="#FF3B0748" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LogoColor" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FEACC6" Offset="0" />
+        <GradientStop Color="#7045AF" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="GreenButtonColor" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="DarkGreen" Offset="0" />
+        <GradientStop Color="#ff44b632" Offset="0.73" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LightGreyBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFD3DCE8" Offset="0"/>
+        <GradientStop Color="WhiteSmoke" Offset="0.73"/>
+    </LinearGradientBrush>
+    <!--MyStyle for Controlers
+            Style Label-->
+    <Style TargetType="Label">
+        <Setter Property="FontFamily" Value="Calibri"/>
+    </Style>
+    <Style TargetType="Button">
+        <Setter Property="FontFamily" Value="Calibri"/>
+    </Style>
+    <Style x:Key="MainLabel" TargetType="Label">
+        <Setter Property="TextColor" Value="WhiteSmoke"/>
+        <Setter Property="FontSize" Value="Large"/>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Start"/>
+        <Setter Property="FontFamily" Value="Calibri"/>
+    </Style>
+    <Style x:Key="StatusLabel" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource DarkColorMy}"/>
+        <Setter Property="FontSize" Value="Medium"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+    </Style>
+    <Style x:Key="TeamsLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="Small"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="TextColor" Value="{StaticResource GrayColorMy}"/>
+    </Style>
+    <Style x:Key="ListLabelVal" TargetType="Label">
+        <Setter Property="FontSize" Value="Small"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="TextColor" Value="AntiqueWhite"/>
+    </Style>
+    <Style x:Key="DetailsLabelVal" TargetType="Label" BasedOn="{StaticResource ListLabelVal}">
+        <Setter Property="TextColor" Value="{StaticResource DarkColorMy}"/>
+    </Style>
+    <Style x:Key="IconLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="Material"/>
+        <Setter Property="FontSize" Value="Large"/>
+        <Setter Property="TextColor" Value="{StaticResource GrayColorMy}"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+    </Style>
+
+    <!--Buttons-->
+    <Style x:Key="MyMainButton" TargetType="Button">
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="BackgroundColor">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFE18DFC" Offset="0" />
+                    <GradientStop Color="#FF88D2FE" Offset="1" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="MyMainAddButton" TargetType="Button">
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="BackgroundColor">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="DarkGreen" Offset="0" />
+                    <GradientStop Color="#ff44b632" Offset="0.73" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--Segmented Control-->
+    <Style x:Key="MySegmentControl" TargetType="segmentedcontrol:SfSegmentedControl">
+        <Setter Property="Margin" Value="10,0"/>
+        <Setter Property="CornerRadius" Value="15"/>
+        <Setter Property="SegmentHeight" Value="40"/>
+        <Setter Property="BorderColor" Value="Transparent"/>
+        <Setter Property="Color" Value="#048EAC"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="DisplayMode" Value="Text"/>
+        <Setter Property="FontColor" Value="#FFFFFF"/>
+        <Setter Property="SelectionTextColor" Value="WhiteSmoke"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+    </Style>
+    
+    <!--Frame-->
+    <Style  x:Key="MyInputFrame" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="WhiteSmoke"/>
+        <Setter Property="Padding" Value="4"/>
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="CornerRadius" Value="7"/>
+    </Style>
+
+
+</ResourceDictionary>

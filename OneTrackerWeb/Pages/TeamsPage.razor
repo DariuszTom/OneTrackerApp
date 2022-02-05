@@ -1,0 +1,150 @@
+﻿@page "/Pages/Teams"
+
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Cards
+@using Syncfusion.Blazor.Layouts
+
+@inject IMatToaster Toaster
+
+@inherits MvvmComponentBase<TeamsViewModel>
+
+<div class="page-title">
+    <img src="/images/team.png" class="page-title-img" />
+    <span class="page-title-text"><label>@Bind(x => x.Title)</label></span>
+    <div style="clear:both; height:5px;"></div>
+</div>
+<div class="wraper-page">
+    @if (_pageRecordList is null)
+    {
+        <Loading></Loading>
+    }
+    else
+    {
+        <SfSplitter Height="100%" Width="100%" Orientation="Syncfusion.Blazor.Layouts.Orientation.Horizontal">
+            <SplitterPanes>
+                <SplitterPane>
+                    <ContentTemplate>
+                        <div style="height:600px; padding:10px;">
+                            <MatCard class="demo-mat-card mat-elevation-z7" Style="padding: 7px;">
+                                <div class="demo-mat-card-content">
+                                    <MatHeadline6 class="demo-mat-card-clean-margin">
+                                        <span style="padding-right:2px"><i class="far fa-plus-square"></i></span>Add Cart
+                                    </MatHeadline6>
+                                    <MatSubtitle2 class="demo-mat-card-clean-margin">
+                                        Team
+                                    </MatSubtitle2>
+                                </div>
+                                <EditForm Model="@_team" OnValidSubmit="@AddEntity">
+                                    <DataAnnotationsValidator />
+                                    <CardContent>
+                                        <p>
+                                            <i class="fas fa-file-signature"></i>
+                                            <MatTextField Class="my-textinput-box-singleline" @bind-Value="@_team.TeamName"
+                                                          Label="Team Name" HelperTextPersistent="true"></MatTextField>
+                                            <ValidationMessage For="@(() => _team.TeamName)" />
+                                        </p>
+                                        <p>
+                                            <i class="fas fa-envelope-square"></i>
+                                            <MatTextField Class="my-textinput-box-singleline" @bind-Value="@_team.Mail"
+                                                          HelperText="Team mail" Label="Team mail"></MatTextField>
+                                            <ValidationMessage For="@(() => _team.Mail)" />
+                                        </p>
+                                        <p>
+                                            <i class="fas fa-user-tie"></i>
+                                            <MatTextField Class="my-textinput-box-singleline" @bind-Value="@_team.Manager"
+                                                          HelperText="Manager name and surname" Label="Manager"></MatTextField>
+                                            <ValidationMessage For="@(() => _team.Manager)" />
+                                        </p>
+
+                                        <p>
+                                            <i class="fas fa-building"></i>
+                                            <MatSelectValue @bind-Value="@_team.Departament" Items="@BindingContext.DicOfTables.Departments"
+                                                            ValueSelector=@(i=>i.Id) HelperText="Select Departament" HelperTextPersistent="true">
+                                                <ItemTemplate Context="Department">
+                                                    <span class="text-center">@Department.DepName</span>
+                                                </ItemTemplate>
+                                            </MatSelectValue>
+                                            <ValidationMessage For="@(() => _team.Departament)" />
+                                        </p>
+                                    </CardContent>
+                                    <MatCardActions Style="margin-top:5px">
+                                        <MatButton Raised="true" Icon="add_alert" Style="background: #298f63;"
+                                                   Type="submit">@BindingContext.ButtonTxt</MatButton>
+                                            </MatCardActions>
+                                        </EditForm>
+                                    </MatCard>
+                                </div>
+                            </ContentTemplate>
+                        </SplitterPane>
+                        <SplitterPane Size="65%" Min="55%">
+                            <ContentTemplate>
+                                <div class="my-main-table">
+                                    <SfGrid ID="GridTeams" DataSource="@_pageRecordList" AllowFiltering="true" AllowPaging="true" AllowSorting="true"
+                                            AllowResizing="true" Toolbar="@(new List<string>() { "Refresh", "Edit", "Delete", "Cancel" })">
+                                        <GridEditSettings AllowDeleting="true" AllowEditing="true"></GridEditSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                        <GridEvents OnToolbarClick="ToolbarClickHandler" RowDeselecting="RowDeselectingHandler"
+                                                    RowSelected="RowSelectingHandler" TValue="DevTeam"></GridEvents>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Excel"></GridFilterSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(DevTeam.Id) HeaderText="Auto Gen ID"
+                                                        IsPrimaryKey="true" TextAlign="TextAlign.Center" Width="130" />
+                                            <GridColumn Field=@nameof(DevTeam.TeamName) HeaderText="Team Name" Width="140" />
+                                            <GridColumn Field=@nameof(DevTeam.Manager) HeaderText="Manager" Width="140" />
+                                            <GridColumn Field="DepartamentNavigation.DepName" Width="140" HeaderText="Departament" />
+                                            <GridColumn Field=@nameof(DevTeam.AddOn) HeaderText="Added" Format="d" Width="120" />
+                                            <GridColumn Field=@nameof(DevTeam.Mail) HeaderText="Mail" />
+                                        </GridColumns>
+                                    </SfGrid>
+                                </div>
+                            </ContentTemplate>
+                        </SplitterPane>
+                    </SplitterPanes>
+                </SfSplitter>
+            }
+</div>
+
+@code {
+    private List<DevTeam> _pageRecordList { get; set; }
+    private TeamsDisplay _team { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        BindingContext.Toaster = Toaster;
+        _team = new();
+        await LoadMainTable();
+    }
+    private async Task LoadMainTable() => _pageRecordList = await BindingContext.LoadMainViewTable();
+    private async Task AddEntity()
+    {
+        await BindingContext.ConvertAndAdd(_team);
+        await LoadMainTable();
+        _team = new();
+
+    }
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "GridTeams_Refresh")
+        {
+            await LoadMainTable();
+        }
+        else if (args.Item.Id == "GridTeams_delete")
+        {
+            await BindingContext.DeletetemToDb();
+        }
+        else if (args.Item.Id == "GridTeams_edit")
+        {
+            BindingContext.ButtonTxt = "Edit";
+            _team = await BindingContext.ConvertToDisplayClass(BindingContext.WorkItem);
+            BindingContext.IsNew = false;
+        }
+        else if (args.Item.Id == "GridTeams_cancel")
+        {
+            _team = new();
+            BindingContext.ClearAfterEdit();
+        }
+
+    }
+    public void RowSelectingHandler(RowSelectEventArgs<DevTeam> args) => BindingContext.WorkItem = args.Data;
+    public void RowDeselectingHandler(RowDeselectEventArgs<DevTeam> args) => BindingContext.WorkItem = null;
+}

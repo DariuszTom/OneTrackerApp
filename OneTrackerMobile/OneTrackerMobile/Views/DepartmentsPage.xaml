@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:OneTrackerMobile.ViewModels"
+             xmlns:datagrid="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:DataType="viewmodel:DepartamentsViewModel"
+             x:Class="OneTrackerMobile.Views.DepartmentsPage"
+             Visual="Material">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddNewItem}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <viewmodel:DepartamentsViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="70*" />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="7*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Padding="1">
+                <StackLayout Orientation="Horizontal" Background="{StaticResource Blazor}" Padding="2" Spacing="1">
+                    <material:MaterialIcon Source="sitemap.png" TintColor="WhiteSmoke" WidthRequest="20" Margin="4" />
+                    <Label Text="Departments" Style="{StaticResource MainLabel }" />
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="1">
+                <datagrid:SfDataGrid AllowSorting="True" AllowResizingColumn="True"
+                                     AllowSwiping="True" AutoGenerateColumnsForCustomType="False"
+                                     CanUseViewFilter="True" AutoGenerateColumns="False"
+                                     ItemsSource="{Binding RecordList, Mode=OneWay}" BackgroundColor="WhiteSmoke"
+                                     ColumnSizer="Star" SelectionUnit="Row" Padding="1"
+                                     SelectionMode="Single" LiveDataUpdateMode="AllowSummaryUpdate">
+                    <datagrid:SfDataGrid.GridStyle>
+                        <datagrid:DefaultStyle HeaderBackgroundColor="CadetBlue" HeaderForegroundColor="White"
+                                 RowBackgroundColor="White" RowForegroundColor="Black"
+                                 SelectionBackgroundColor="LightSkyBlue" SelectionForegroundColor="White"
+                                 CaptionSummaryRowBackgroundColor="White" CaptionSummaryRowForegroundColor="Black"
+                                 GridCellBorderColor="Gray" LoadMoreViewBackgroundColor="Gray"
+                                 LoadMoreViewForegroundColor="Black" AlternatingRowColor="WhiteSmoke" />
+                    </datagrid:SfDataGrid.GridStyle>
+                    <datagrid:SfDataGrid.Columns x:TypeArguments="syncfusion:Columns">
+                        <datagrid:GridTextColumn HeaderText="ID" HeaderFontAttribute="Bold"
+                                   MappingName="Id" TextAlignment="Center" MaximumWidth="40" MinimumWidth="20"
+                                                 Padding="1" />
+                        <datagrid:GridTextColumn HeaderText="Department name" HeaderFontAttribute="Bold"
+                                   MappingName="DepName" />
+                        <datagrid:GridDateTimeColumn HeaderText="Added" MappingName="AddOn" HeaderFontAttribute="Bold"
+                                                     Format="dd-m-yyyy hh:mm" />
+                    </datagrid:SfDataGrid.Columns>
+                </datagrid:SfDataGrid>
+            </Grid>
+            <Grid Grid.Row="2">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Status:" Style="{StaticResource StatusLabel}" />
+                    <Label Text="{Binding Status, Mode=OneWay}" Style="{StaticResource StatusLabel}" />
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="3" HeightRequest="40">
+                <material:MaterialButton Text="Refresh" Command="{Binding Path=LoadMainList}"
+                                             Style="{StaticResource MyMainButton}" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

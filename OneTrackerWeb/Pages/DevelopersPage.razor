@@ -1,0 +1,149 @@
+﻿@page "/Pages/Developers"
+
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Cards
+@using Syncfusion.Blazor.Layouts
+
+@inject IMatToaster Toaster
+
+@inherits MvvmComponentBase<DevelopersViewModel>
+
+<div class="page-title">
+    <img src="/images/codingBlack.png" class="page-title-img" />
+    <span class="page-title-text"><label>@Bind(x => x.Title)</label></span>
+    <div style="clear:both; height:5px;"></div>
+</div>
+
+<div class="wraper-page">
+    @if (_pageRecordList is null)
+    {
+        <Loading></Loading>
+    }
+    else
+    {
+        <SfSplitter Height="100%" Width="100%" Orientation="Syncfusion.Blazor.Layouts.Orientation.Horizontal">
+            <SplitterPanes>
+                <SplitterPane>
+                    <ContentTemplate>
+                        <div style="height:800px; padding:10px;">
+                            <MatCard class="demo-mat-card mat-elevation-z7" Style="padding: 7px;">
+                                <div class="demo-mat-card-content">
+                                    <MatHeadline6 class="demo-mat-card-clean-margin">
+                                        <span style="padding-right:2px"><i class="far fa-plus-square"></i></span>Add Cart
+                                    </MatHeadline6>
+                                    <MatSubtitle2 class="demo-mat-card-clean-margin">
+                                        Developer
+                                    </MatSubtitle2>
+                                </div>
+                                <EditForm Model="@_dev" OnValidSubmit="@AddEntity">
+                                    <DataAnnotationsValidator />
+                                    <CardContent>
+                                        <p>
+                                            <i class="fas fa-id-badge"></i>
+                                            <MatTextField Class="my-textinput-box-singleline" @bind-Value="@_dev.IdEmployee"
+                                                          HelperText="Id Employee" Label="Id Employee"></MatTextField>
+                                            <ValidationMessage For="@(() => _dev.IdEmployee)" />
+                                        </p>
+                                        <p>
+                                            <i class="fas fa-user-tag"></i>
+                                            <MatTextField Class="my-textinput-box-singleline" @bind-Value="@_dev.EmpName"
+                                                          HelperText="Name" Label="Name"></MatTextField>
+                                            <ValidationMessage For="@(() => _dev.EmpName)" />
+                                        </p>
+                                        <p>
+                                            <i class="fas fa-user-tag"></i>
+                                            <MatTextField Class="my-textinput-box-singleline" @bind-Value="@_dev.EmpSurname"
+                                                          HelperText="Surname" Label="Surname"></MatTextField>
+                                            <ValidationMessage For="@(() => _dev.EmpSurname)" />
+                                        </p>
+                                        <p>
+                                            <i class="fas fa-envelope-square"></i>
+                                            <MatTextField Class="my-textinput-box-singleline" @bind-Value="@_dev.Mail"
+                                                          HelperText="Mail" Label="Mail"></MatTextField>
+                                            <ValidationMessage For="@(() => _dev.Mail)" />
+                                        </p>
+                                        <p>
+                                            <i class="fas fa-phone"></i>
+                                            <MatTextField Class="my-textinput-box-singleline" @bind-Value="@_dev.Phone"
+                                                          HelperText="Phone" Label="Phone" PlaceHolder="xxxxxxxxxx"></MatTextField>
+                                            <ValidationMessage For="@(() => _dev.Phone)" />
+                                        </p>
+                                        <p>
+
+                                            <i class="fas fa-star"></i> <label class="col-form-label-sm"> Position:</label>
+                                            <SfChip @bind-SelectedChips="SingleSelected" Selection="Syncfusion.Blazor.Buttons.SelectionType.Single">
+                                                <ChipItems>
+                                                    @foreach (string item in BindingContext.Positions)
+                                                    {
+                                                        <ChipItem Text="@item" CssClass="e-primary" Enabled="true"></ChipItem>
+                                                    }
+                                                </ChipItems>
+                                            </SfChip>
+                                        </p>
+                                        <p>
+                                            <i class="fas fa-users"></i>
+                                            <MatSelectValue @bind-Value="@_dev.Team" Items="@BindingContext.DicOfTables.DevTeams"
+                                                            ValueSelector=@(i=>i.Id) HelperText="Select Team" HelperTextPersistent="true">
+                                                <ItemTemplate Context="DevTeam">
+                                                    <span class="text-center">@DevTeam.TeamName</span>
+                                                </ItemTemplate>
+                                            </MatSelectValue>
+                                            <ValidationMessage For="@(() => _dev.Team)" />
+                                        </p>
+                                    </CardContent>
+                                    <MatCardActions>
+                                        <MatButton Raised="true" Icon="add_alert" Style="background: #298f63;"
+                                                   Type="submit">@BindingContext.ButtonTxt</MatButton>
+                                            </MatCardActions>
+                                        </EditForm>
+                                    </MatCard>
+                                </div>
+                            </ContentTemplate>
+                        </SplitterPane>
+                        <SplitterPane Size="65%" Min="55%">
+                            <ContentTemplate>
+                                <div class="my-main-table">
+                                    <SfGrid ID="GridTeams" DataSource="@_pageRecordList" AllowFiltering="true" AllowPaging="true" AllowSorting="true"
+                                            AllowResizing="true" Toolbar="@(new List<string>() { "Refresh", "Edit", "Delete", "Cancel" })">
+                                        <GridEditSettings AllowDeleting="true" AllowEditing="true"></GridEditSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                        <GridEvents OnToolbarClick="ToolbarClickHandler" RowDeselecting="RowDeselectingHandler"
+                                                    RowSelected="RowSelectingHandler" TValue="Employee"></GridEvents>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Excel"></GridFilterSettings>
+
+                                        <GridColumns>
+                                            <GridColumn HeaderText="Dev phot" TextAlign="TextAlign.Center" Width="120">
+                                                <Template>
+                                                    @{
+                                                        <div class="e-avatar e-avatar-small image">
+                                                            <img src="/images/coding.png" />
+                                                        </div>
+                                                    }
+                                                </Template>
+                                            </GridColumn>
+                                            <GridColumn Field=@nameof(Employee.Id) HeaderText="AutGenID"
+                                                        IsPrimaryKey="true" TextAlign="TextAlign.Center" Width="100" />
+                                            <GridColumn Field=@nameof(Employee.IdEmployee) HeaderText="IdEmployee" Width="120" />
+                                            <GridColumn Field=@nameof(Employee.EmpName) HeaderText="Name" Width="120" />
+                                            <GridColumn Field=@nameof(Employee.EmpSurname) HeaderText="Surname" Width="140" />
+                                            <GridColumn Field=@nameof(Employee.Mail) HeaderText="Mail" Width="140" />
+                                            <GridColumn Field=@nameof(Employee.Phone) HeaderText="Phone" Width="120" />
+                                            <GridColumn Field=@nameof(Employee.Position) HeaderText="Position" Width="100" />
+                                            <GridColumn Field="TeamNavigation.TeamName" Width="140" HeaderText="Team" />
+                                            <GridColumn Field="TeamNavigation.Manager" Width="140" HeaderText="Team" />
+                                        </GridColumns>
+                                    </SfGrid>
+                                </div>
+                            </ContentTemplate>
+                        </SplitterPane>
+                    </SplitterPanes>
+                </SfSplitter>
+            }
+</div>
+
+<style>
+    .e-chip-list.e-selection .e-chip.e-active {
+        background-color: #7fde62;
+        color: whitesmoke;
+    }
+</style>

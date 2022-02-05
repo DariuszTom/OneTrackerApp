@@ -1,0 +1,85 @@
+﻿@page "/Pages/OpenProjects"
+
+@using SharedLibrary.Developer
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Cards
+@using Syncfusion.Blazor.Layouts
+
+@inject IMatToaster Toaster
+
+@inherits MvvmComponentBase<OpenProjectViewModel>
+
+<div class="page-title">
+    <img src="/images/blueprint.png" class="page-title-img" />
+    <span class="page-title-text"><label>@Bind(x => x.Title)</label></span>
+    <div style="clear:both; height:5px;"></div>
+</div>
+<div class="wraper-page">
+    <div class=" col-12">
+        @if (_pageRecordList is null)
+        {
+            <Loading></Loading>
+        }
+        else
+        {
+            <SfGrid ID="GridTeams" DataSource="@_pageRecordList" AllowFiltering="true" AllowPaging="true" AllowSorting="true"
+                    AllowReordering="true" AllowGrouping="true" AllowResizing="true" Toolbar="@(new List<string>() { "Refresh", "Delete", "Edit", "Cancel" })">
+                <GridGroupSettings ShowDropArea="true" AllowReordering="true"></GridGroupSettings>
+                <GridEditSettings AllowEditing="true" AllowDeleting="true"></GridEditSettings>
+                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                <GridEvents OnToolbarClick="ToolbarClickHandler" RowDeselecting="RowDeselectingHandler"
+                            RowSelected="RowSelectingHandler" TValue="Project"></GridEvents>
+                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Excel"></GridFilterSettings>
+
+                <GridColumns>
+
+                    <GridColumn Field=@nameof(Project.Id) HeaderText="AutGenID"
+                                IsPrimaryKey="true" TextAlign="TextAlign.Center" Width="100" />
+                    <GridColumn Field=@nameof(Project.ProjectName) HeaderText="Project Name" Width="120" />
+
+                    <GridColumn Field=@nameof(Project.RequestingTeam) HeaderText="Requesting Team" Width="120" />
+                    <GridColumn Field=@nameof(Project.ContactPerson) HeaderText="Contact" Width="120" />
+                    <GridForeignColumn Field=@nameof(Project.ProjectType) HeaderText="Type" ForeignKeyField="ProjectTypeName"
+                                       Width="100" ForeignKeyValue="ProjectTypeName" ForeignDataSource="@BindingContext.DicOfTables.ProjectTypes" />
+                    <GridForeignColumn Field=@nameof(Project.Piority) HeaderText="Piority" ForeignKeyField="PriorityName"
+                                       Width="100" ForeignKeyValue="PriorityName" ForeignDataSource="@BindingContext.DicOfTables.ProjectPriority" />
+                    <GridColumn Field=@nameof(Project.Benefits) HeaderText="Benefits" Width="110" />
+                    <GridColumn Field=@nameof(Project.Comment) HeaderText="Comment" Width="140" />
+                    <GridColumn Field=@nameof(Project.SubmitionTime) Format="d" HeaderText="Submition" Width="110" />
+                    <GridColumn Field=@nameof(Project.FteSavings) HeaderText="Fte Savings" Width="90" />
+                    <GridColumn Field=@nameof(Project.DueDate) Format="d" HeaderText="Due Date" Width="110" />
+                    <GridForeignColumn Field=@nameof(Project.ProjectStatus) HeaderText="Status" ForeignKeyField=@nameof(ProjectStatus.ProjectStatusName)
+                                       Width="100" ForeignKeyValue=@nameof(ProjectStatus.ProjectStatusName) ForeignDataSource="@BindingContext.DicOfTables.ProjectStatuses" />
+                    <GridColumn Uid="TeamIdCol" Field="DevTeamNavigation.TeamName" HeaderText="Dev team" Width="110" />
+                    <GridColumn Uid="TeamIdCol" Field="DeveloperNavigation.IdEmployee" HeaderText="Developer" Width="110" />
+                    <GridColumn Field=@nameof(Project.DevComment) HeaderText="Comment" Width="140" />
+                    <GridColumn HeaderText="Update in DB" TextAlign="TextAlign.Center" Width="100">
+                        <Template>
+                            <MatButton Class="datagrid-button-update" Command="@BindingContext.UpdateItemCommand" Raised="true" TrailingIcon="dns">Update</MatButton>
+                        </Template>
+                    </GridColumn>
+                </GridColumns>
+            </SfGrid>
+        }
+    </div>
+</div>
+<style>
+    .e-grid .e-headercelldiv {
+        font-size: 13px;
+        color: darkslateblue;
+        padding-left: 2px;
+        margin-left: 3px;
+    }
+
+    .e-grid .e-rowcell {
+        font-size: 13px;
+    }
+
+    .datagrid-button-update {
+        width: 80px;
+        height: 25px;
+        padding: 4px;
+        justify-items;
+        font: 500
+    }
+</style>

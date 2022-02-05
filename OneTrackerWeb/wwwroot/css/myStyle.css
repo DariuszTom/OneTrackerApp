@@ -1,0 +1,108 @@
+﻿.spinner {
+    border: 16px solid silver;
+    border-top: 16px solid #337AB7;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 700ms linear infinite;
+    top: 40%;
+    left: 55%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+.menu-icon {
+    float: left;
+    max-width: 30px;
+    max-height: 30px;
+    margin-right: 20px;
+    margin-left: 0;
+    padding-left: 0;
+    filter: invert(100%);
+}
+
+.page-title {
+    border-bottom: dotted;
+    border-width: thin;
+    border-block-color: powderblue;
+    margin-bottom: 10px
+}
+
+.page-title-img {
+    float: left;
+    max-width: 25px;
+    max-height: 25px;
+    margin-right: 5px
+}
+
+.page-title-text {
+    font-size: larger;
+    font-weight: bold
+}
+
+#depdepadd {
+    background-color: whitesmoke;
+    width: 45%;
+    padding-right: 10px;
+    padding-top: 10px;
+}
+
+#deptable {
+    width: 55%;
+    padding-right: 10px;
+    padding-top: 10px;
+}
+
+.corner-radius {
+    -moz-border-radius: 10px 200px 200px 10px;
+    border-width: thin;
+    border-color: darkblue;
+    float: left;
+}
+
+.card-add-entity {
+    background-color: wheat;
+}
+
+.wraper-page {
+}
+
+.my-main-table {
+}
+
+.my-textinput-box-singleline {
+    height: 50px;
+    width: 250px;
+    font-size: medium
+}
+
+.my-chip-style {
+    background-color: #397eed !important;
+    font: bold !important;
+    color: whitesmoke !important
+}
+
+    .my-chip-style:active {
+        background-color: #39ed75
+    }
+
+.e-grid .e-headercelldiv {
+    font-size: 14px;
+    color: darkslateblue;
+    padding-left: 2px;
+}
+
+.e-grid .e-rowcell {
+    font-size: 14px;
+}

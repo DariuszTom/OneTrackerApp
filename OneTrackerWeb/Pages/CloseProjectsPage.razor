@@ -1,0 +1,81 @@
+﻿@page "/Pages/CloseProjects"
+
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Cards
+@using Syncfusion.Blazor.Layouts
+
+@inject IMatToaster Toaster
+
+@inherits MvvmComponentBase<CloseProjectsViewModel>
+
+<div class="page-title">
+    <img src="/images/completed-task.png" class="page-title-img" />
+    <span class="page-title-text"><label>@Bind(x => x.Title)</label></span>
+    <div style="clear:both; height:5px;"></div>
+</div>
+<div class="wraper-page">
+    <div class=" col-12">
+        @if (_pageRecordList is null)
+        {
+            <Loading></Loading>
+        }
+        else
+        {
+            <SfGrid ID="Grid" @ref="Grid" DataSource="@_pageRecordList" AllowFiltering="true" AllowPaging="true" AllowSorting="true"
+                    AllowReordering="true" AllowGrouping="true" AllowResizing="true" AllowExcelExport="true" AllowPdfExport="true"
+                    Toolbar="@(new List<string>() { "Refresh", "Cancel","ExcelExport", "PdfExport"  })">
+                <GridGroupSettings ShowDropArea="true" AllowReordering="true"></GridGroupSettings>
+                <GridEditSettings AllowEditing="true" AllowDeleting="false"></GridEditSettings>
+                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="ProjectFinalized"></GridEvents>
+                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Excel"></GridFilterSettings>
+
+                <GridColumns>
+
+                    <GridColumn Field=@nameof(ProjectFinalized.IdProject ) HeaderText="AutGenID"
+                                IsPrimaryKey="true" TextAlign="TextAlign.Center" Width="100" />
+                    <GridColumn Field=@nameof(ProjectFinalized.ProjectName ) HeaderText="Project Name" Width="120" />
+
+                    <GridColumn Field=@nameof(ProjectFinalized.RequestingTeam) HeaderText="Requesting Team" Width="120" />
+                    <GridColumn Field=@nameof(ProjectFinalized.ContactPerson) HeaderText="Contact" Width="120" />
+                    <GridColumn Field=@nameof(ProjectFinalized.ProjectType) HeaderText="Type" Width="100" />
+                    <GridColumn Field=@nameof(ProjectFinalized.Piority) HeaderText="Piority" Width="100" />
+                    <GridColumn Field=@nameof(ProjectFinalized.MacroName) HeaderText="Macro" Width="100" />
+                    <GridColumn Field=@nameof(ProjectFinalized.Benefits) HeaderText="Benefits" Width="110" />
+                    <GridColumn Field=@nameof(ProjectFinalized.Comment) HeaderText="Comment" Width="140" />
+                    <GridColumn Field=@nameof(ProjectFinalized.SubmitionTime) Format="d" HeaderText="Submition" Width="110" />
+                    <GridColumn Field=@nameof(ProjectFinalized.FteSavings) Format="c2" HeaderText="Fte Savings" Width="90" />
+                    <GridColumn Field=@nameof(ProjectFinalized.DueDate) Format="d" HeaderText="Due Date" Width="100" />
+                    <GridColumn Field=@nameof(ProjectFinalized.DoneTime) Format="d" HeaderText="Done Date" Width="100" />
+                    <GridColumn Field=@nameof(ProjectFinalized.DevTeam) HeaderText="Dev Team" Width="100" />
+                    <GridColumn Field=@nameof(ProjectFinalized.Developer) HeaderText="Developer" Width="100" />
+                    @*<GridForeignColumn TValue="TeamForViewNew" Field=@nameof(ProjectFinalized.DevTeam) HeaderText="Dev Team" ValidationRules="@(new ValidationRules{ Required=true})"
+                                           ForeignKeyValue="TeamName" ForeignKeyField="Id" ForeignDataSource="@BindingContext.DicOfTables.TeamForView" Width="100"></GridForeignColumn>
+                        <GridForeignColumn TValue="DeveloperForView" Field=@nameof(ProjectFinalized.Developer) HeaderText="Developer" ValidationRules="@(new ValidationRules{ Required=true})"
+                                           ForeignKeyValue="IdEmployee" ForeignKeyField="Id" ForeignDataSource="@BindingContext.DicOfTables.DevelopersForView" Width="100"></GridForeignColumn>*@
+                    <GridColumn Field=@nameof(ProjectFinalized.DevComment) HeaderText="Comment" Width="140" />
+                </GridColumns>
+            </SfGrid>
+        }
+    </div>
+</div>
+<style>
+    .e-grid .e-headercelldiv {
+        font-size: 13px;
+        color: darkslateblue;
+        padding-left: 2px;
+        margin-left: 3px;
+    }
+
+    .e-grid .e-rowcell {
+        font-size: 13px;
+    }
+
+    .datagrid-button-update {
+        width: 80px;
+        height: 25px;
+        padding: 4px;
+        justify-items;
+        font: 500
+    }
+</style>

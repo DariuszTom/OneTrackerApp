@@ -1,0 +1,68 @@
+﻿@page "/Pages/StatesPage"
+
+@using SharedLibrary.Developer
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Charts
+
+@inject IMatToaster Toaster
+
+@inherits MvvmComponentBase<ChartsViewModel>
+
+<div class="page-title">
+    <img src="/images/barchart.png" class="page-title-img" />
+    <span class="page-title-text"><label>@Bind(x => x.Title)</label></span>
+    <div style="clear:both; height:5px;"></div>
+</div>
+
+<div class="wraper-page col-10" style="margin-left:5px;min-width:700px">
+    <div class="wraper-page-charts">
+        <div>
+            <SfChart Title="Developer Stats">
+                <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+                <ChartPrimaryXAxis Title="Developers" ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
+                <ChartPrimaryYAxis Title="Point"></ChartPrimaryYAxis>
+                <ChartSeriesCollection>
+                    <ChartSeries DataSource="@Bind(x=>x.DevStats)" XName="FullName" YName="Score" Type="ChartSeriesType.Column">
+                    </ChartSeries>
+                </ChartSeriesCollection>
+            </SfChart>
+        </div>
+        <div>
+        </div>
+        <div>
+            <MatPaper Style="height:stretch" Elevation="12">
+                <MatAccordion>
+                    <MatExpansionPanel>
+                        <MatExpansionPanelSummary>
+                            <MatExpansionPanelHeader>
+                                <span style="font-weight:bold"><i class="fas fa-cog"></i>Chart Settings</span>
+                            </MatExpansionPanelHeader>
+                        </MatExpansionPanelSummary>
+                        <MatExpansionPanelDetails>
+                            <label style="text-wrap:normal; font-size:medium">Select developers Team to check stats:</label>
+                            <MatSelectValue Class="input-box-project" Style="height:70px" @bind-Value="BindingContext.SelectedTeam" Items="@BindingContext.DicOfTables.TeamForView"
+                                            ValueSelector=@(i=>i.Id)>
+                                <ItemTemplate Context="TeamForViewNew">
+                                    <span class="text-center">@TeamForViewNew.TeamName</span>
+                                </ItemTemplate>
+                            </MatSelectValue>
+                            <div>
+                                <MatButton Raised="true" Icon="refresh" Style="background: #b7cced; color:darkslateblue"
+                                           Command="BindingContext.GetDevStatsCommand">Load Data</MatButton>
+                            </div>
+                        </MatExpansionPanelDetails>
+                    </MatExpansionPanel>
+                </MatAccordion>
+            </MatPaper>
+        </div>
+    </div>
+</div>
+<style>
+    .wraper-page-charts {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: minmax(100px, auto);
+        grid-column-gap: 10px;
+        grid-row-gap: 10px
+    }
+</style>

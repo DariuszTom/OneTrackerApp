@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:DbDataLibrary.Models;assembly=DbDataLibrary"
+             xmlns:behavior="clr-namespace:OneTrackerMobile.Behavior"
+             xmlns:viewmodel="clr-namespace:OneTrackerMobile.ViewModels"
+             xmlns:segmentedcontrol="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="OneTrackerMobile.Views.AppUserPage"
+             x:DataType="viewmodel:AppUserViewModel"
+             Visual="Material">
+
+    <ContentPage.BindingContext>
+        <viewmodel:AppUserViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="70*" />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="7*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Padding="1">
+                <StackLayout Orientation="Horizontal" Background="{StaticResource Blazor}" Padding="2" Spacing="1">
+                    <material:MaterialIcon Source="profile_user.png" TintColor="WhiteSmoke" WidthRequest="20" Margin="4" />
+                    <Label Text="User Details" Style="{StaticResource MainLabel }" />
+                </StackLayout>
+            </Grid>
+            <ScrollView Grid.Row="1">
+                <Grid RowDefinitions="84,84,84,84,84,80">
+
+                    <Frame Grid.Row="0" Style="{StaticResource  MyInputFrame}">
+                        <Grid ColumnDefinitions="20,*">
+                            <Label Grid.Column="0" Text="&#xe174;" Style="{StaticResource IconLabel}" />
+                            <material:MaterialTextField Placeholder="User Name" HelperText="User Name"  VerticalOptions="End"
+                                                ErrorText="Invalid input" Text="{Binding Path=WorkItem.EmpName, Mode=TwoWay}" InputType="Text" ShouldAnimateUnderline="True"
+                                                Grid.Column="1" />
+                        </Grid>
+                    </Frame>
+                    <Frame Grid.Row="1" Style="{StaticResource  MyInputFrame}">
+                        <Grid ColumnDefinitions="20,*">
+                            <Label Grid.Column="0" Text="&#xe174;" Style="{StaticResource IconLabel}" />
+                            <material:MaterialTextField Placeholder="User Surname" HelperText="User Surname"  VerticalOptions="End"
+                                                ErrorText="Invalid input" Text="{Binding Path=WorkItem.EmpSurname, Mode=TwoWay}" InputType="Text" ShouldAnimateUnderline="True"
+                                                Grid.Column="1" />
+                        </Grid>
+                    </Frame>
+                    <Frame Grid.Row="2" Style="{StaticResource  MyInputFrame}">
+                        <Grid ColumnDefinitions="20,*">
+                            <Label Grid.Column="0" Text="&#xe85e;" Style="{StaticResource IconLabel}" />
+                            <material:MaterialTextField Placeholder="Company Id" HelperText="Company Id"  VerticalOptions="End"
+                                                ErrorText="Invalid input" Text="{Binding Path=WorkItem.IdEmployee , Mode=TwoWay}" InputType="Text" ShouldAnimateUnderline="True"
+                                                Grid.Column="1" />
+                        </Grid>
+                    </Frame>
+                    <Frame Grid.Row="3" Style="{StaticResource  MyInputFrame}">
+                        <Grid ColumnDefinitions="20,*">
+                            <Label Grid.Column="0" Text="&#xe0cf;" Style="{StaticResource IconLabel}" />
+                            <material:MaterialTextField Placeholder="Phone" HelperText="Company Phone"  VerticalOptions="End"
+                                                ErrorText="Invalid input" Text="{Binding Path=WorkItem.Phone, Mode=TwoWay}" InputType="Telephone" ShouldAnimateUnderline="True"
+                                                Grid.Column="1" />
+                        </Grid>
+                    </Frame>
+                    <Frame Grid.Row="4" Style="{StaticResource  MyInputFrame}">
+                        <Grid ColumnDefinitions="20,*">
+                            <Label Grid.Column="0" Text="&#xf18a;" Style="{StaticResource IconLabel}" />
+                            <material:MaterialTextField Placeholder="Mail" HelperText="Company mail"  VerticalOptions="End"
+                                                ErrorText="Invalid input" Text="{Binding Path=WorkItem.Mail, Mode=TwoWay}" InputType="Email" ShouldAnimateUnderline="True"
+                                                Grid.Column="1" />
+                        </Grid>
+                    </Frame>
+                    <Frame Grid.Row="6" Style="{StaticResource  MyInputFrame}">
+
+                        <StackLayout Orientation="Vertical">
+                            <Label Grid.Column="0" Text="Position" />
+                            <segmentedcontrol:SfSegmentedControl x:Name="segmentedControl"
+                                                                Style="{StaticResource MySegmentControl}"
+                                                                VisibleSegmentsCount="6"
+                                                                SelectedIndex="3"
+                                                                ItemsSource="{Binding Positions}">
+                                <segmentedcontrol:SfSegmentedControl.Behaviors>
+                                    <behavior:EventToCommandBehavior  Command="{Binding SelectionChangedCommand}" EventName="SelectionChanged" />
+                                </segmentedcontrol:SfSegmentedControl.Behaviors>
+                            </segmentedcontrol:SfSegmentedControl>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame Grid.Row="5" Style="{StaticResource  MyInputFrame}">
+                        <Grid ColumnDefinitions="20,*">
+                            <Label Grid.Column="0" Text="&#xf233;" Style="{StaticResource IconLabel}" />
+                            <inputLayout:SfTextInputLayout HelperText="Select Team" Grid.Column="1">
+                                <combobox:SfComboBox DataSource="{Binding Path=Teams, Mode=OneWay}" DisplayMemberPath="TeamName"
+                                                 SuggestionMode="StartsWith" ItemPadding="2" HeightRequest="55" IsEditableMode="True"
+                                                 SelectedValuePath="Id"
+                                                 SelectedValue="{Binding WorkItem.Team, Mode=TwoWay}">
+                                    <combobox:SfComboBox.ItemTemplate>
+                                        <DataTemplate  x:DataType="model:TeamForViewNew">
+                                            <StackLayout Orientation="Horizontal" Padding="2">
+                                                <Label Text="{Binding TeamName}" Margin="2" />
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </combobox:SfComboBox.ItemTemplate>
+                                </combobox:SfComboBox>
+                            </inputLayout:SfTextInputLayout>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+            <Grid Grid.Row="2">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Status:" Style="{StaticResource StatusLabel}" />
+                    <Label Text="{Binding Status, Mode=OneWay}" Style="{StaticResource StatusLabel}" />
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="3" HeightRequest="40">
+                <material:MaterialButton Text="{Binding Path=WhatToDo}" Command="{Binding AddOrUpdateItem}"
+                                             Style="{StaticResource MyMainAddButton}" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

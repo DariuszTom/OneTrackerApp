@@ -1,0 +1,103 @@
+﻿@page "/Pages/Department"
+
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Cards
+
+@inject IMatToaster Toaster
+
+@inherits MvvmComponentBase<DepartmentViewModel>
+
+<div class="page-title">
+    <img src="/images/department.png" class="page-title-img" />
+    <span class="page-title-text"><label>@Bind(x => x.Title)</label></span>
+    <div style="clear:both; height:5px;"></div>
+</div>
+
+<div class="wraper-page">
+
+    @if (_pageRecordList is null)
+    {
+        <Loading></Loading>
+    }
+    else
+    {
+        <div id="depadd" style="float: left; padding-top:10px; width:280px; margin-right:20px;">
+            <MatCard class="demo-mat-card" Style="padding:7px;">
+                <div class="demo-mat-card-content">
+                    <MatHeadline6 class="demo-mat-card-clean-margin">
+                        <span style="padding-right:2px"><i class="far fa-plus-square"></i></span>Add Cart
+                    </MatHeadline6>
+                    <MatSubtitle2 class="demo-mat-card-clean-margin">
+                        Department
+                    </MatSubtitle2>
+                </div>
+                <EditForm Model="@_dep" OnValidSubmit="@AddEntity">
+                    <DataAnnotationsValidator />
+                    <CardContent>
+                        <p>
+                            <i class="fas fa-file-signature"></i>
+                            <MatTextField Style="height:50px" @bind-Value="@_dep.DepName"
+                                          HelperText="Insert department name" Label="Department Name" HelperTextPersistent="true"></MatTextField>
+                            <ValidationMessage For="@(() => _dep.DepName)" />
+                        </p>
+                    </CardContent>
+                    <MatCardActions>
+                        <MatButton Raised="true" Icon="add_alert" Style="background: #298f63;"
+                                   Type="submit">@Bind(x => x.ButtonTxt)</MatButton>
+                            </MatCardActions>
+                        </EditForm>
+                    </MatCard>
+                </div>
+
+                <div id="deptable" class="corner-radius">
+                    <SfGrid ID="Grid" DataSource="@_pageRecordList" AllowFiltering="true" AllowPaging="true" AllowSorting="true"
+                            AllowResizing="true" Toolbar="@(new List<string>() { "Refresh", "Delete", "Cancel" })">
+                        <GridEditSettings AllowDeleting="true"></GridEditSettings>
+                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                        <GridEvents OnToolbarClick="ToolbarClickHandler" RowDeselecting="RowDeselectingHandler"
+                                    RowSelected="RowSelectingHandler" TValue="Department"></GridEvents>
+                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Excel"></GridFilterSettings>
+                        <GridColumns>
+                            <GridColumn Field=@nameof(Department.Id) HeaderText="Auto Gen ID"
+                                        IsPrimaryKey="true" TextAlign="TextAlign.Center" Width="140" />
+                            <GridColumn Field=@nameof(Department.DepName) HeaderText="Department Name" />
+                            <GridColumn Field=@nameof(Department.AddOn) HeaderText="Added " Format="d" />
+                        </GridColumns>
+                    </SfGrid>
+                </div>
+                <div style="clear:both"></div>
+            }
+</div>
+
+@code {
+    private List<Department> _pageRecordList { get; set; }
+    private DepartmentDisplay _dep { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        BindingContext.Toaster = Toaster;
+        _dep = new();
+        await LoadMainTable();
+    }
+    private async Task LoadMainTable() => _pageRecordList = await BindingContext.LoadMainViewTable();
+    private async Task AddEntity()
+    {
+        await BindingContext.ConvertAndAdd(_dep);
+        await LoadMainTable();
+        _dep = new();
+
+    }
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "Grid_Refresh")
+        {
+            await LoadMainTable();
+        }
+        else if (args.Item.Id == "Grid_delete")
+        {
+            await BindingContext.DeletetemToDb();
+        }
+    }
+    public void RowSelectingHandler(RowSelectEventArgs<Department> args) => BindingContext.WorkItem = args.Data;
+    public void RowDeselectingHandler(RowDeselectEventArgs<Department> args) => BindingContext.WorkItem = null;
+}

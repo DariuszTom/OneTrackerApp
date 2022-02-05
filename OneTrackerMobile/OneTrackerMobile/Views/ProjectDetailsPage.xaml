@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:OneTrackerMobile.ViewModels"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="OneTrackerMobile.Views.ProjectDetailsPage"
+             x:DataType="viewmodel:ProjectDetailsViewModel"
+             Visual="Material">
+
+    <ContentPage.BindingContext>
+        <viewmodel:ProjectDetailsViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="70*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Padding="1">
+                <StackLayout Orientation="Horizontal" Background="{StaticResource Blazor}" Padding="2" Spacing="1">
+                    <material:MaterialIcon Source="blueprint.png" TintColor="WhiteSmoke" WidthRequest="20" Margin="4" />
+                    <Label Text="{Binding Title}" Style="{StaticResource MainLabel }" />
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="1">
+                <ScrollView>
+                    <Frame Grid.Row="0" Style="{StaticResource MyInputFrame}">
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Project Id:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding WorkItem.Id}" Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Project Name:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding WorkItem.ProjectName}" Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Requesting Team:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding WorkItem.RequestingTeam}" Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Contact Person:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding WorkItem.ContactPerson}" Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Project Type:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding WorkItem.ProjectType}" Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Piority:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding WorkItem.Piority}" Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Submition Time:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding Path=WorkItem.SubmitionTime,
+                                    StringFormat='Created on {0:D}' }" Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Update Time:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding Path=WorkItem.UpdateTime ,
+                                    StringFormat='Last Updated on {0:g}' }" Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="FteSavings:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding Path=WorkItem.FteSavings, StringFormat='Expected savings: {0:F2}'}"
+                                       Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Benefits:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding WorkItem.Benefits}" Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Comments:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding WorkItem.Comment}" Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="DueDate:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding Path=WorkItem.DueDate,
+                                    StringFormat='Expected to finish on {0:D}' }" Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Status:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding WorkItem.ProjectStatus}" Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Dev Team:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding WorkItem.DevTeam}" Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Developer:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding WorkItem.Developer}" Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Dev Comment:" Style="{StaticResource TeamsLabel}" />
+                                <Label Text="{Binding WorkItem.DevComment}" Style="{StaticResource DetailsLabelVal}" />
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </ScrollView>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

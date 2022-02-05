@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="OneTrackerDBService.OneTrackerDbService" CodeBehind="OneTrackerDbService.svc.cs" %>

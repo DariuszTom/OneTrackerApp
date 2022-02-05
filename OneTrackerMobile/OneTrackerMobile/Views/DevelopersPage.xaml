@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:modelView="clr-namespace:DbDataLibrary.Models;assembly=DbDataLibrary"
+             xmlns:behavior="clr-namespace:OneTrackerMobile.Behavior"
+             xmlns:viewmodel="clr-namespace:OneTrackerMobile.ViewModels"
+             xmlns:sfAvatarView="clr-namespace:Syncfusion.XForms.AvatarView;assembly=Syncfusion.Core.XForms"
+             xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="OneTrackerMobile.Views.DevelopersPage"
+             x:DataType="viewmodel:DevelopersViewModel"
+             material:MaterialNavigationPage.AppBarColor="{StaticResource MainColor}"
+             material:MaterialNavigationPage.StatusBarColor="{StaticResource MainColor}"
+             Visual="Material">
+
+    <ContentPage.BindingContext>
+        <viewmodel:DevelopersViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="5*" />
+                <RowDefinition Height="70*" />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="7*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Padding="1">
+                <StackLayout Orientation="Horizontal" Background="{StaticResource Blazor}" Padding="2" Spacing="1">
+                    <material:MaterialIcon Source="profile_user.png" TintColor="WhiteSmoke" WidthRequest="20" Margin="4" />
+                    <Label Text="Developers" Style="{StaticResource MainLabel }" />
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="1">
+                <SearchBar x:Name="DevSearch" CancelButtonColor="CadetBlue" PlaceholderColor="{StaticResource GrayColorMy}"
+                           HorizontalTextAlignment="Center" Text="{Binding SearchTxt, Mode=TwoWay}">
+                    <SearchBar.Behaviors>
+                        <behavior:EventToCommandBehavior  Command="{Binding SearchTxtChangeCommand}" EventName="TextChanged" />
+                    </SearchBar.Behaviors>
+                </SearchBar>
+            </Grid>
+            <Grid Grid.Row="2">
+                <CollectionView BackgroundColor="Transparent"
+                                IsGrouped="False" ItemSizingStrategy="MeasureFirstItem"
+                                ItemsLayout="VerticalList"
+                                ItemsSource="{Binding DevList, Mode=OneWay}"
+                                SelectionMode="Single" VerticalScrollBarVisibility="Default"
+                                Margin="2">
+                    <CollectionView.EmptyView>
+                        <shimmer:SfShimmer x:Name="shimmer" VerticalOptions="FillAndExpand" Type="Persona"
+                                           Color="#F4E2EE">
+                            <shimmer:SfShimmer.Content>
+                                <StackLayout>
+                                    <Label Text="Missing Data!" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" />
+                                </StackLayout>
+                            </shimmer:SfShimmer.Content>
+                        </shimmer:SfShimmer>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="modelView:DeveloperForView">
+                            <material:MaterialCard  CornerRadius="10" BorderColor="{StaticResource GrayColorMy}" HasShadow="True"
+                                                    Background="{StaticResource Blazor}">
+                                <Grid ColumnDefinitions="*,4*,*">
+                                    <Grid Grid.Column="0">
+                                        <sfAvatarView:SfAvatarView
+                                                ContentType="Default"
+                                                AvatarShape="Circle"
+                                                AvatarSize="Large"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center"
+                                                ImageSource="coding.png"
+                                                BorderColor="{StaticResource  WhiteColorMy}">
+                                        </sfAvatarView:SfAvatarView>
+                                    </Grid>
+                                    <StackLayout Orientation="Vertical" Grid.Column="1" Padding="0" Margin="-2">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding EmpName}" Style="{StaticResource TeamsLabel}" />
+                                            <Label Text="{Binding EmpSurname}"  Style="{StaticResource TeamsLabel}" />
+                                        </StackLayout>
+                                        <Label Text="{Binding TeamNavigation.TeamName}"  Style="{StaticResource TeamsLabel}" />
+                                        <Label Text="{Binding Phone}"  Style="{StaticResource TeamsLabel}" />
+                                        <Label Text="{Binding Mail}"  Style="{StaticResource TeamsLabel}" />
+                                    </StackLayout>
+                                    <Grid Grid.Column="2">
+                                        <material:MaterialIconButton Image="telephone_call.png"
+                                                                     Background="Transparent"
+                                                                     BorderColor="Transparent"
+                                                                     CornerRadius="7"
+                                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DevelopersViewModel}}, Path=MakeCallComman}"
+                                                                     CommandParameter="{Binding Phone}" />
+                                    </Grid>
+                                </Grid>
+                            </material:MaterialCard>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+            <Grid Grid.Row="3">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Status:" Style="{StaticResource StatusLabel}" />
+                    <Label Text="{Binding Status, Mode=OneWay}" Style="{StaticResource StatusLabel}" />
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="4" HeightRequest="40">
+                <material:MaterialButton Text="Refresh" Command="{Binding Path=LoadMainList}"
+                                          Style="{StaticResource MyMainButton}" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

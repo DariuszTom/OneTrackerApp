@@ -1,0 +1,227 @@
+﻿@page "/Pages/CreateProject"
+
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Cards
+@using Syncfusion.Blazor.Inputs
+
+@inject IMatToaster Toaster
+
+@inherits MvvmComponentBase<AddProjectViewModel>
+
+<div class="page-title">
+    <img src="/images/add.png" class="page-title-img" />
+    <span class="page-title-text"><label>@Bind(x => x.Title)</label></span>
+    <div style="clear:both; height:5px;"></div>
+</div>
+<div class="wraper-page col-8" style="margin-left:5px;min-width:700px">
+    <MatCard class="demo-mat-card mat-elevation-z7" Style="padding: 7px; width:100%; height:100%">
+        <div class="demo-mat-card-content">
+            <MatHeadline6 class="demo-mat-card-clean-margin">
+                <span style="padding-right:2px"><i class="far fa-plus-square"></i></span>Add Cart
+            </MatHeadline6>
+            <MatSubtitle2 class="demo-mat-card-clean-margin">
+                Project:
+            </MatSubtitle2>
+        </div>
+        <EditForm Model="@_pro" OnValidSubmit="@AddEntity">
+            <DataAnnotationsValidator />
+            <CardContent>
+                <div class="wraper-add">
+                    <div class="border-gradient">
+                        <p>
+                            <i class="fas fa-file-signature"></i>
+                            <MatTextField @bind-Value="@_pro.ProjectName" Class="input-box-project"
+                                          Label="Project Name"></MatTextField>
+                            <ValidationMessage For="@(() => _pro.ProjectName)" />
+                        </p>
+                        <p>
+                            <i class="fas fa-users"></i>
+                            <MatTextField @bind-Value="@_pro.RequestingTeam" Class="input-box-project"
+                                          Label="Requesting Team"></MatTextField>
+                            <ValidationMessage For="@(() => _pro.RequestingTeam)" />
+                        </p>
+                        <p>
+                            <i class="fas fa-user-tag"></i>
+                            <MatTextField @bind-Value="@_pro.ContactPerson" Class="input-box-project"
+                                          Label="Contact Person"></MatTextField>
+                            <ValidationMessage For="@(() => _pro.ContactPerson)" />
+                        </p>
+                        <p>
+                            <i class="fas fa-prescription-bottle icon-list-project" style="margin-top:8px"></i>
+                            <div class="drop-down-list" style="padding-left:3px">
+                                <SfDropDownList TValue="string" Placeholder="e.g. Select Project Type" TItem="ProjectType"
+                                                @bind-Value="@_pro.ProjectType" DataSource="@BindingContext.DicOfTables.ProjectTypes">
+                                    <DropDownListFieldSettings Value="ProjectTypeName"></DropDownListFieldSettings>
+                                </SfDropDownList>
+                            </div>
+                        </p>
+                        <div style="clear: both; margin-top:2px; margin-bottom:20px"></div>
+                        <p>
+                            <i class="fas fa-weight icon-list-project" style="margin-top:8px"></i>
+                            <div class="drop-down-list">
+                                <SfDropDownList TValue="string" Placeholder="e.g. Select Priority" TItem="ProjectPriority"
+                                                @bind-Value="@_pro.Piority" DataSource="@BindingContext.DicOfTables.ProjectPriority">
+                                    <DropDownListFieldSettings Value="PriorityName"></DropDownListFieldSettings>
+                                </SfDropDownList>
+                            </div>
+                        </p>
+                        <div style="clear: both; margin-top:2px; margin-bottom:20px"></div>
+                        <p>
+                            <i class="fas fa-coins"></i>
+                            <MatTextField @bind-Value="@_pro.Benefits" Class="input-box-project"
+                                          Label="Benefits"></MatTextField>
+                            <ValidationMessage For="@(() => _pro.Benefits)" />
+                        </p>
+                        <p>
+                            <i class="fab fa-adn"></i>
+                            <MatTextField @bind-Value="@_pro.MacroName" Class="input-box-project"
+                                          Label="Macro Name"></MatTextField>
+                            <ValidationMessage For="@(() => _pro.MacroName)" />
+                        </p>
+                        <p>
+                            <div class="comment-project-icon"><i class="fas fa-comment"></i></div>
+                            <MatAccordion Class="comment-project">
+                                <MatExpansionPanel>
+                                    <MatExpansionPanelSummary>
+                                        <MatExpansionPanelHeader><span style="font-weight:bold">Comment</span></MatExpansionPanelHeader>
+                                    </MatExpansionPanelSummary>
+                                    <MatExpansionPanelDetails>
+                                        <SfTextBox Multiline=true Placeholder="Enter your comment about project" @bind-Value="@_pro.Comment"></SfTextBox>
+                                    </MatExpansionPanelDetails>
+                                </MatExpansionPanel>
+                            </MatAccordion>
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            <i style="margin-left:2px" class="fas fa-piggy-bank comment-project-icon"></i>
+                            <div class="comment-project ">
+                                <SfNumericTextBox TValue="float?" @bind-Value="@_pro.FteSavings" Placeholder="FTE savings"
+                                                  Min=0 Max=10>
+                                </SfNumericTextBox>
+                            </div>
+                        </p>
+                        <div style="clear: both; margin-top:2px; margin-bottom:20px"></div>
+                        <p>
+                            <i class="far fa-calendar comment-project-icon" style="margin-left:6px;margin-top:25px; align-content:center"></i>
+                            <MatDatePicker Label="Due Date" @bind-Value="@_pro.DueDate" Style="height:min-content" />
+                        </p>
+                        <p>
+                            <i class="fas fa-question-circle comment-project-icon" style="padding-left:2px"></i>
+                            <div class="drop-down-list" style="margin-left:0px">
+                                <SfDropDownList TValue="string" Placeholder="e.g. Select Project Status" TItem="ProjectStatus"
+                                                @bind-Value="@_pro.ProjectStatus" DataSource="@BindingContext.DicOfTables.ProjectStatuses">
+                                    <DropDownListFieldSettings Value="ProjectStatusName"></DropDownListFieldSettings>
+                                </SfDropDownList>
+                            </div>
+                        </p>
+                        <div style="clear: both; margin-top:2px; margin-bottom:20px"></div>
+                        <p>
+                            <i class="fas fa-users" style="padding-left:2px"></i>
+                            <MatSelectValue Class="input-box-project" Style="height:70px" @bind-Value="@_pro.DevTeam" Items="@BindingContext.DicOfTables.TeamForView"
+                                            ValueSelector=@(i=>i.Id) HelperText="Select Team" HelperTextPersistent="true">
+                                <ItemTemplate Context="TeamForViewNew">
+                                    <span class="text-center">@TeamForViewNew.TeamName</span>
+                                </ItemTemplate>
+                            </MatSelectValue>
+                            <ValidationMessage For="@(() => _pro.DevTeam)" />
+                        </p>
+                        <p>
+                            <i class="fas fa-pray" style="padding-left:2px"></i>
+                            <MatSelectValue Class="input-box-project" Style="height:70px" @bind-Value="@_pro.Developer" Items="@BindingContext.DicOfTables.DevelopersForView"
+                                            ValueSelector=@(i=>i.Id) HelperText="Select Team" HelperTextPersistent="true">
+                                <ItemTemplate Context="DeveloperForView">
+                                    <span class="text-center">@DeveloperForView.IdEmployee</span>
+                                </ItemTemplate>
+                            </MatSelectValue>
+                            <ValidationMessage For="@(() => _pro.Developer)" />
+                        </p>
+                        <p>
+                            <div class="comment-project-icon"><i class="fas fa-comment"></i></div>
+                            <MatAccordion Class="comment-project">
+                                <MatExpansionPanel>
+                                    <MatExpansionPanelSummary>
+                                        <MatExpansionPanelHeader><span style="font-weight:bold">Dev Comment</span></MatExpansionPanelHeader>
+                                    </MatExpansionPanelSummary>
+                                    <MatExpansionPanelDetails>
+                                        <SfTextBox Multiline=true Placeholder="Developer comments about project" @bind-Value="@_pro.DevComment"></SfTextBox>
+                                    </MatExpansionPanelDetails>
+                                </MatExpansionPanel>
+                            </MatAccordion>
+                        </p>
+                    </div>
+                </div>
+            </CardContent>
+            <MatCardActions>
+                <div class="wraper-action-bar">
+                    <div>
+                        <MatButton Raised="true" Icon="add_alert" Style="background: #298f63;"
+                                   Type="submit">@BindingContext.ButtonTxt</MatButton>
+                            </div>
+                            <div>
+                                <MatButton Raised="true" Icon="clear" Style="background: #b7cced; color:darkslateblue"
+                                           OnClick="@Clear">Clear</MatButton>
+                            </div>
+                            <div>
+                                <MatButton Raised="true" Icon="find_in_page" Style="background: #2fa8a8; color: darkslateblue; width:auto"
+                                           OnClick="@FindDev">Find Free Dev</MatButton>
+                            </div>
+                        </div>
+                    </MatCardActions>
+                </EditForm>
+            </MatCard>
+        </div>
+
+        <style>
+            .wraper-add {
+                display: grid;
+                grid-template-columns: 50% 50%;
+                padding-inline: 1px;
+                grid-auto-rows: minmax(400px, auto);
+                font-size: 12px;
+            }
+
+            .input-box-project {
+                width: 80%;
+                height: min-content
+            }
+
+            .border-gradient {
+                border-radius: 3px;
+                border-right: 2px dotted #b4bfcc;
+            }
+
+            .drop-down-list {
+                width: 60%;
+                float: left !important;
+                align-content: start;
+                margin-left: 10px;
+            }
+
+            .icon-list-project {
+                float: left !important;
+            }
+
+            .e-ddl.e-input-group input.e-input::placeholder {
+                color: brown;
+            }
+
+            .comment-project {
+                width: 80%;
+                float: left
+            }
+
+            .comment-project-icon {
+                float: left;
+                margin-top: 14px;
+                margin-right: 3px
+            }
+
+            .wraper-action-bar {
+                display: grid;
+                grid-gap: 10px;
+                grid-template-columns: 1fr 1fr 1fr 1fr !important;
+                align-items: center;
+                width: 100% !important
+            }
+        </style>

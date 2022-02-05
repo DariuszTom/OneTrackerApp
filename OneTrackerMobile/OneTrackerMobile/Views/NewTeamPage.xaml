@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:DbDataLibrary.Models.Entities;assembly=DbDataLibrary"
+             xmlns:viewmodel="clr-namespace:OneTrackerMobile.ViewModels"
+             xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="OneTrackerMobile.Views.NewTeamPage"
+             x:DataType="viewmodel:NewTeamViewModel"
+             Visual="Material">
+    <ContentPage.BindingContext>
+        <viewmodel:NewTeamViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="70*" />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="7*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Padding="1">
+                <StackLayout Orientation="Horizontal" Background="{StaticResource Blazor}" Padding="2" Spacing="1">
+                    <material:MaterialIcon Source="team.png" TintColor="WhiteSmoke" WidthRequest="20" Margin="4" />
+                    <Label Text="Add Team" Style="{StaticResource MainLabel }" />
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="1" RowDefinitions="85,85,80,85">
+                <Frame Grid.Row="0" Style="{StaticResource  MyInputFrame}">
+                    <Grid ColumnDefinitions="20,*">
+                        <Label Grid.Column="0" Text="&#xe729;" Style="{StaticResource IconLabel}" />
+                        <material:MaterialTextField Placeholder="Team name" HelperText="Please provide Team name"  VerticalOptions="End"
+                                                ErrorText="Invalid input" Text="{Binding Path=WorkItem.TeamName, Mode=TwoWay}" InputType="Text" ShouldAnimateUnderline="True"
+                                                Grid.Column="1" />
+                    </Grid>
+                </Frame>
+                <Frame Grid.Row="1" Style="{StaticResource  MyInputFrame}">
+                    <Grid ColumnDefinitions="20,*">
+                        <Label Grid.Column="0" Text="&#xe0be;" Style="{StaticResource IconLabel}" />
+                        <material:MaterialTextField Placeholder="Team email" HelperText="Please provide mail"
+                                                Text="{Binding Path=WorkItem.Mail, Mode=TwoWay}" InputType="Email" ShouldAnimateUnderline="True"
+                                                Grid.Column="1" />
+                    </Grid>
+                </Frame>
+                <Frame Grid.Row="2" Style="{StaticResource  MyInputFrame}">
+                    <Grid ColumnDefinitions="20,*">
+                        <Label Grid.Column="0" Text="&#xe7fd;" Style="{StaticResource IconLabel}" />
+                        <inputLayout:SfTextInputLayout HelperText="Select Departament" Grid.Column="1">
+                            <combobox:SfComboBox DataSource="{Binding Path=DepList, Mode=OneWay}" DisplayMemberPath="DepName"
+                                                 SuggestionMode="StartsWith" ItemPadding="2" HeightRequest="55" IsEditableMode="True"
+                                                 SelectedValuePath="Id"
+                                                 SelectedValue="{Binding WorkItem.Departament, Mode=TwoWay}">
+                                <combobox:SfComboBox.ItemTemplate>
+                                    <DataTemplate  x:DataType="model:Department">
+                                        <StackLayout Orientation="Horizontal" Padding="2">
+                                            <Label Text="{Binding DepName}" Margin="2" />
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </combobox:SfComboBox.ItemTemplate>
+                            </combobox:SfComboBox>
+                        </inputLayout:SfTextInputLayout>
+                    </Grid>
+                </Frame>
+                <Frame Grid.Row="3" Style="{StaticResource  MyInputFrame}">
+                    <Grid ColumnDefinitions="20,*">
+                        <Label Grid.Column="0" FontFamily="Material" Text="&#xe7fd;" TextColor="Black" FontSize="Large" VerticalOptions="Center" />
+                        <material:MaterialTextField Placeholder="Team manager" HelperText="Please manager name"
+                                                Text="{Binding Path=WorkItem.Manager, Mode=TwoWay}" InputType="Text" ShouldAnimateUnderline="True"
+                                                Grid.Column="1" TextColor="{StaticResource MainColor}" />
+                    </Grid>
+                </Frame>
+            </Grid>
+            <Grid Grid.Row="2">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Status:" Style="{StaticResource StatusLabel}" />
+                    <Label Text="{Binding Status, Mode=OneWay}" Style="{StaticResource StatusLabel}" />
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="3" HeightRequest="40">
+                <material:MaterialButton Text="{Binding Path=WhatToDo}" Command="{Binding AddOrUpdateItem}"
+                                             Style="{StaticResource MyMainAddButton}" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,22 @@
+{
+  "ExtendedData": {
+    "inputs": [
+      "http://192.168.0.220:53311/OneTrackerDbService.svc"
+    ],
+    "collectionTypes": [
+      "System.Collections.Generic.Dictionary`2",
+      "System.Collections.Generic.List`1"
+    ],
+    "namespaceMappings": [
+      "*, OneTrackerDbService"
+    ],
+    "references": [
+      "AutoMapper, {AutoMapper, 10.1.1}",
+      "E:\\OneTracker3\\OneTrackerApp\\OneTrackerMobile\\OneTrackerMobile\\bin\\Debug\\netstandard2.0\\DbDataLibrary.dll",
+      "E:\\OneTracker3\\OneTrackerApp\\OneTrackerMobile\\OneTrackerMobile\\bin\\Debug\\netstandard2.0\\SharedLibrary.dll"
+    ],
+    "sync": true,
+    "targetFramework": "netstandard2.0",
+    "typeReuseMode": "Specified"
+  }
+}

@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:modelView="clr-namespace:DbDataLibrary.Models;assembly=DbDataLibrary"
+             xmlns:viewmodel="clr-namespace:OneTrackerMobile.ViewModels"
+             xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="OneTrackerMobile.Views.TeamsPage"
+             x:DataType="viewmodel:TeamsViewModel"
+             Visual="Material">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddNewItem}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <viewmodel:TeamsViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="70*" />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="7*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Padding="1">
+                <StackLayout Orientation="Horizontal" Background="{StaticResource Blazor}" Padding="2" Spacing="1">
+                    <material:MaterialIcon Source="team.png" TintColor="WhiteSmoke" WidthRequest="20" Margin="4" />
+                    <Label Text="Teams" Style="{StaticResource MainLabel }" />
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="1">
+                <CollectionView BackgroundColor="Transparent"
+                                IsGrouped="False" ItemSizingStrategy="MeasureFirstItem"
+                                ItemsLayout="VerticalList"
+                                ItemsSource="{Binding RecordList, Mode=OneWay}"
+                                SelectedItem="{Binding ItemSelected, Mode=TwoWay}"
+                                SelectionMode="Single" VerticalScrollBarVisibility="Default"
+                                Margin="2">
+                    <CollectionView.EmptyView>
+                        <shimmer:SfShimmer x:Name="shimmer" VerticalOptions="FillAndExpand" Type="Article"
+                                           Color="#F4E2EE">
+                            <shimmer:SfShimmer.Content>
+                                <StackLayout>
+                                    <Label Text="Missing Data!" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" />
+                                </StackLayout>
+                            </shimmer:SfShimmer.Content>
+                        </shimmer:SfShimmer>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="modelView:TeamForViewNew">
+                            <SwipeView android:SwipeView.SwipeTransitionMode="Drag">
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem
+                                            BackgroundColor="{StaticResource DarkColorMy}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TeamsViewModel}}, Path=EditItem}"
+                                            CommandParameter="{Binding .}"
+                                            Text="Edit" />
+                                        <SwipeItem
+                                            BackgroundColor="{StaticResource AccentColorMy}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TeamsViewModel}}, Path=DeleteItem}"
+                                            CommandParameter="{Binding .}"
+                                            IsDestructive="True"
+                                            Text="Delete" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <Frame  CornerRadius="10" BorderColor="{StaticResource GrayColorMy}" HasShadow="True"
+                                        Background="{StaticResource Blazor}">
+                                    <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,*">
+                                        <StackLayout Orientation="Horizontal" Grid.Row="0">
+                                            <Label Text="Team name:" Style="{StaticResource TeamsLabel}" />
+                                            <Label Text="{Binding TeamName}" Style="{StaticResource ListLabelVal}" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal" Grid.Row="1">
+                                            <Label Text="Mail:" Style="{StaticResource TeamsLabel}" />
+                                            <Label Text="{Binding Mail}" Style="{StaticResource ListLabelVal}" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="1"
+                                                 HorizontalOptions="Fill">
+                                            <Label Text="Manager:" Style="{StaticResource TeamsLabel}" />
+                                            <Label Text="{Binding Manager}" Style="{StaticResource ListLabelVal}" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1"
+                                                 HorizontalOptions="Fill">
+                                            <Label Text="Team name:" Style="{StaticResource TeamsLabel}" />
+                                            <Label Text="{Binding DepartamentNavigation.DepName}" Style="{StaticResource ListLabelVal}" />
+                                        </StackLayout>
+                                    </Grid>
+                                </Frame>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+            <Grid Grid.Row="2">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Status:" Style="{StaticResource StatusLabel}" />
+                    <Label Text="{Binding Status, Mode=OneWay}" Style="{StaticResource StatusLabel}" />
+                </StackLayout>
+            </Grid>
+            <Grid Grid.Row="3" HeightRequest="40">
+                <material:MaterialButton Text="Refresh" Command="{Binding Path=LoadMainList}"
+                                             Style="{StaticResource MyMainButton}" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

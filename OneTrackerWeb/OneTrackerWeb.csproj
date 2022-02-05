@@ -1,0 +1,76 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <ApplicationIcon>hnet.com-image.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\images\coding.png" />
+    <Content Remove="wwwroot\images\hnet.com-image.ico" />
+  </ItemGroup>
+
+<ItemGroup>
+      <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="6.0.4" />
+      <PackageReference Include="MatBlazor" Version="2.8.0" />
+      <PackageReference Include="MvvmBlazor" Version="2.0.0" />
+      <PackageReference Include="Syncfusion.Blazor.Buttons" Version="19.4.0.47" />
+      <PackageReference Include="Syncfusion.Blazor.Cards" Version="19.4.0.47" />
+      <PackageReference Include="Syncfusion.Blazor.Charts" Version="19.4.0.47" />
+      <PackageReference Include="Syncfusion.Blazor.Core" Version="19.4.0.47" />
+      <PackageReference Include="Syncfusion.Blazor.Grid" Version="19.4.0.47" />
+      <PackageReference Include="Syncfusion.Blazor.Layouts" Version="19.4.0.47" />
+      <PackageReference Include="Syncfusion.Blazor.Navigations" Version="19.4.0.47" />
+</ItemGroup>
+
+<ItemGroup>
+  <Folder Include="Data\" />
+  <Folder Include="Utilities\" />
+</ItemGroup>
+
+<ItemGroup>
+  <None Include="wwwroot\favicon.ico" />
+  <None Include="wwwroot\images\coding.png" />
+</ItemGroup>
+
+<ItemGroup>
+  <ProjectReference Include="..\DbDataLibrary\DbDataLibrary.csproj" />
+  <ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj" />
+</ItemGroup>
+
+	<ItemGroup>
+		<Watch Include="..\**\*.razor" />
+		<Watch Include="..\**\*.scss" />
+		<Watch Include="..\**\*.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Watch Remove="Pages\AddProject.razor" />
+	  <Watch Remove="Pages\AddProject.razor.cs" />
+	  <Watch Remove="Pages\ChartsPage.razor" />
+	  <Watch Remove="Pages\ChartsPage.razor.cs" />
+	  <Watch Remove="Pages\CloseProjectsPage.razor" />
+	  <Watch Remove="Pages\CloseProjectsPage.razor.cs" />
+	  <Watch Remove="Pages\DepartmentPage.razor" />
+	  <Watch Remove="Pages\DevelopersPage.razor" />
+	  <Watch Remove="Pages\DevelopersPage.razor.cs" />
+	  <Watch Remove="Pages\OpenProjectsPage.razor" />
+	  <Watch Remove="Pages\OpenProjectsPage.razor.cs" />
+	  <Watch Remove="Pages\TeamsPage.razor" />
+	  <Watch Remove="Services\CloseProjectsDataStore.cs" />
+	  <Watch Remove="Services\DevelopersDataStore.cs" />
+	  <Watch Remove="Services\ProjectDataStore.cs" />
+	  <Watch Remove="Services\TeamsDataStore.cs" />
+	  <Watch Remove="Shared\Loading.razor" />
+	  <Watch Remove="ViewModel\AddProjectViewModel.cs" />
+	  <Watch Remove="ViewModel\BaseViewModel.cs" />
+	  <Watch Remove="ViewModel\ChartsViewModel.cs" />
+	  <Watch Remove="ViewModel\CloseProjectsViewModel.cs" />
+	  <Watch Remove="ViewModel\DepartmentViewModel.cs" />
+	  <Watch Remove="ViewModel\DevelopersViewModel.cs" />
+	  <Watch Remove="ViewModel\OpenProjectViewModel.cs" />
+	  <Watch Remove="ViewModel\TeamsViewModel.cs" />
+	</ItemGroup>
+
+
+</Project>

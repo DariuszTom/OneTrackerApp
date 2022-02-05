@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:DbDataLibrary.Models.Entities;assembly=DbDataLibrary"
+             xmlns:modelforview="clr-namespace:DbDataLibrary.Models;assembly=DbDataLibrary"
+             xmlns:viewmodel="clr-namespace:OneTrackerMobile.ViewModels"
+             xmlns:numericupdown="clr-namespace:Syncfusion.SfNumericUpDown.XForms;assembly=Syncfusion.SfNumericUpDown.XForms"
+             xmlns:segmentedcontrol="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+             xmlns:expander="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
+             xmlns:tabview="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="OneTrackerMobile.Views.ProjectPage"
+             x:DataType="viewmodel:ProjectViewModel"
+             Visual="Material">
+
+    <ContentPage.BindingContext>
+        <viewmodel:ProjectViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <tabview:SfTabView Margin="0,0,0,2"
+                               x:Name="ProjectTab"
+                               VisibleHeaderCount="4"
+                               TabHeaderPosition="Top"
+                               DisplayMode="ImageWithText">
+            <tabview:SfTabView.Items>
+                <tabview:SfTabItem Title="Requestor"
+                                       TitleFontSize="12"
+                                       IconFont="#xe56e"
+                                       FontIconFontFamily="Material"
+                                       SelectionColor="#FF00AFF0"
+                                       FontIconFontColor="{StaticResource MainColor}"
+                                       TitleFontColor="{StaticResource MainColor}">
+                    <tabview:SfTabItem.Content>
+                        <!--First tab-->
+
+                        <Grid RowDefinitions="84,84,84,84,84">
+                            <Frame Grid.Row="0" Style="{StaticResource MyInputFrame}">
+                                <Grid ColumnDefinitions="20,*">
+                                    <Label Grid.Column="0" Text="&#xe05e;" Style="{StaticResource IconLabel}" />
+                                    <material:MaterialTextField Placeholder="Project Name" HelperText="Project Name"  VerticalOptions="End"
+                                                ErrorText="Invalid input" Text="{Binding Path=WorkItem.ProjectName, Mode=TwoWay}" InputType="Text" ShouldAnimateUnderline="True"
+                                                Grid.Column="1" />
+                                </Grid>
+                            </Frame>
+
+                            <Frame Grid.Row="1" Style="{StaticResource MyInputFrame}">
+                                <Grid ColumnDefinitions="20,*">
+                                    <Label Grid.Column="0" Text="&#xf21c;" Style="{StaticResource IconLabel}" />
+                                    <material:MaterialTextField Placeholder="Requesting Team" HelperText="Requesting Team"  VerticalOptions="End"
+                                                ErrorText="Invalid input" Text="{Binding Path=WorkItem.RequestingTeam, Mode=TwoWay}" InputType="Text" ShouldAnimateUnderline="True"
+                                                Grid.Column="1" />
+                                </Grid>
+                            </Frame>
+                            <Frame Grid.Row="2" Style="{StaticResource MyInputFrame}">
+                                <Grid ColumnDefinitions="20,*">
+                                    <Label Grid.Column="0" Text="&#xe0cf;" Style="{StaticResource IconLabel}" />
+                                    <material:MaterialTextField Placeholder="Contact Person" HelperText="Contact Person"  VerticalOptions="End"
+                                                ErrorText="Invalid input" Text="{Binding Path=WorkItem.ContactPerson, Mode=TwoWay}" InputType="Text" ShouldAnimateUnderline="True"
+                                                Grid.Column="1" />
+                                </Grid>
+                            </Frame>
+
+                            <Frame Grid.Row="3" Style="{StaticResource MyInputFrame}">
+                                <Grid ColumnDefinitions="20,*">
+                                    <Label Grid.Column="0" Text="&#xe614;" Style="{StaticResource IconLabel}" />
+                                    <StackLayout Orientation="Vertical" Grid.Column="1">
+                                        <Label Text="Due Date" />
+                                        <DatePicker Date="{Binding WorkItem.DueDate ,Mode=TwoWay}" Format="dd/MM/yyyy"
+                                                       VerticalOptions="StartAndExpand" />
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                            <Frame Grid.Row="4" Style="{StaticResource MyInputFrame}">
+                                <Grid ColumnDefinitions="20,*">
+                                    <Label Grid.Column="0" Text="&#xe262;" Style="{StaticResource IconLabel}" />
+                                    <material:MaterialTextField Placeholder="Macro Name" HelperText="Macro Name"  VerticalOptions="End"
+                                                ErrorText="Invalid input" Text="{Binding Path=WorkItem.MacroName, Mode=TwoWay}" InputType="Text" ShouldAnimateUnderline="True"
+                                                Grid.Column="1" />
+                                </Grid>
+                            </Frame>
+                            <Frame Grid.Row="5" Style="{StaticResource  MyInputFrame}">
+
+                                <StackLayout Orientation="Vertical">
+                                    <Label Grid.Column="0" Text="Priority" />
+                                    <segmentedcontrol:SfSegmentedControl x:Name="segmentedControl"
+                                                                Style="{StaticResource MySegmentControl}"
+                                                                SelectedIndex="{Binding PiorityIndex, Mode=TwoWay}"
+                                                                ItemsSource="{Binding Path=StaticTbl.PriorityStr,Mode=OneTime}">
+                                    </segmentedcontrol:SfSegmentedControl>
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </tabview:SfTabItem.Content>
+                </tabview:SfTabItem>
+                <tabview:SfTabItem Title="Details"
+                                       TitleFontSize="12"
+                                       IconFont="&#xf1c3;"
+                                       FontIconFontFamily="Material"
+                                       SelectionColor="#FF00AFF0"
+                                       FontIconFontColor="{StaticResource MainColor}"
+                                       TitleFontColor="{StaticResource MainColor}">
+                    <tabview:SfTabItem.Content>
+                        <!--Secend Tab-->
+                        <Grid RowDefinitions="Auto,84,84,84,84,84">
+                            <expander:SfExpander IsExpanded="False" Grid.Row="0">
+                                <expander:SfExpander.Header>
+                                    <Grid Margin="2" Padding="2">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="&#xef42;" Style="{StaticResource IconLabel}" />
+                                            <Label Text="Comments notebook" TextColor="#495F6E" FontSize="14" VerticalOptions="CenterAndExpand" />
+                                        </StackLayout>
+                                    </Grid>
+                                </expander:SfExpander.Header>
+                                <expander:SfExpander.Content>
+                                    <Grid ColumnDefinitions="20,*">
+                                        <Frame Grid.Row="0" Grid.Column="1"  Style="{StaticResource  MyInputFrame}">
+                                            <Frame IsClippedToBounds="true"
+                                                        Padding="0" CornerRadius="15">
+                                                <Editor HorizontalOptions="Fill"
+                                                          VerticalOptions="Fill" Keyboard="Text"
+                                                          AutoSize="TextChanges"
+                                                          Placeholder="Comments"
+                                                          PlaceholderColor="{StaticResource GreenColorMy}"
+                                                          IsSpellCheckEnabled="True"
+                                                          FontSize="Small"
+                                                          Text="{Binding WorkItem.Comment}" />
+                                            </Frame>
+                                        </Frame>
+                                    </Grid>
+                                </expander:SfExpander.Content>
+                            </expander:SfExpander>
+
+                            <Frame Grid.Row="1" Style="{StaticResource  MyInputFrame}">
+                                <Grid ColumnDefinitions="20,*">
+                                    <Label Grid.Column="0" Text="&#xe264;" Style="{StaticResource IconLabel}" />
+                                    <inputLayout:SfTextInputLayout HelperText="Select Project Type" Grid.Column="1">
+                                        <combobox:SfComboBox HighlightedTextColor="{StaticResource AccentColorMy}"
+                                                         DataSource="{Binding Path=StaticTbl.ProjectTypes, Mode=OneWay}" DisplayMemberPath="ProjectTypeName"
+                                                         SuggestionMode="StartsWith" ItemPadding="2" HeightRequest="55" IsEditableMode="True"
+                                                         SelectedValuePath="ProjectTypeName"
+                                                         SelectedValue="{Binding WorkItem.ProjectType, Mode=TwoWay}">
+                                            <combobox:SfComboBox.ItemTemplate>
+                                                <DataTemplate  x:DataType="model:ProjectType">
+                                                    <StackLayout Orientation="Horizontal" Padding="2">
+                                                        <Label Text="{Binding ProjectTypeName}" Margin="2" />
+                                                    </StackLayout>
+                                                </DataTemplate>
+                                            </combobox:SfComboBox.ItemTemplate>
+                                        </combobox:SfComboBox>
+                                    </inputLayout:SfTextInputLayout>
+                                </Grid>
+                            </Frame>
+
+                            <Frame Grid.Row="2" Style="{StaticResource MyInputFrame}">
+                                <Grid ColumnDefinitions="20,*">
+                                    <Label Grid.Column="0" Text="&#xf0cf;" Style="{StaticResource IconLabel}" />
+                                    <material:MaterialTextField Placeholder="Benefits" HelperText="Requesting Team"  VerticalOptions="End"
+                                                ErrorText="Invalid input" Text="{Binding Path=WorkItem.Benefits, Mode=TwoWay}" InputType="Text" ShouldAnimateUnderline="True"
+                                                Grid.Column="1" />
+                                </Grid>
+                            </Frame>
+
+                            <Frame Grid.Row="3" Style="{StaticResource MyInputFrame}">
+                                <Grid ColumnDefinitions="20,*">
+                                    <Label Grid.Column="0" Text="&#xf1bb;" Style="{StaticResource IconLabel}" />
+                                    <StackLayout Orientation="Vertical" Grid.Column="1">
+                                        <Label Text="FTE savings" />
+                                        <numericupdown:SfNumericUpDown x:Name="txtBoxFte" Minimum="0" AllowNull="True"
+                                                                               Maximum="10" MaximumDecimalDigits="2" StepValue="0.1"
+                                                                               SelectAllOnFocus="True"
+                                                                               UpDownButtonColor="{StaticResource MainColor}"
+                                                                               Value="{Binding WorkItem.FteSavings, Mode=TwoWay}" />
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+
+                            <Frame Grid.Row="4" Style="{StaticResource MyInputFrame}">
+                                <Grid ColumnDefinitions="20,*">
+                                    <Label Grid.Column="0" Text="&#xe264;" Style="{StaticResource IconLabel}" />
+                                    <inputLayout:SfTextInputLayout HelperText="Select Project Status" Grid.Column="1">
+                                        <combobox:SfComboBox
+                                                         DataSource="{Binding Path=StaticTbl.ProjectStatuses , Mode=OneWay}" DisplayMemberPath="ProjectStatusName"
+                                                         SuggestionMode="StartsWith" ItemPadding="2" HeightRequest="55"
+                                                         SelectedValuePath="ProjectStatusName"
+                                                         SelectedValue="{Binding WorkItem.ProjectStatus, Mode=TwoWay}">
+                                            <combobox:SfComboBox.ItemTemplate>
+                                                <DataTemplate  x:DataType="model:ProjectStatus">
+                                                    <StackLayout Orientation="Horizontal" Padding="2">
+                                                        <Label Text="{Binding ProjectStatusName}" Margin="2" />
+                                                    </StackLayout>
+                                                </DataTemplate>
+                                            </combobox:SfComboBox.ItemTemplate>
+                                        </combobox:SfComboBox>
+                                    </inputLayout:SfTextInputLayout>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </tabview:SfTabItem.Content>
+                </tabview:SfTabItem>
+                <tabview:SfTabItem Title="Dev Section"
+                                       TitleFontSize="12"
+                                       IconFont="&#xead6;"
+                                       FontIconFontFamily="Material"
+                                       SelectionColor="#FF00AFF0"
+                                       FontIconFontColor="{StaticResource MainColor}"
+                                       TitleFontColor="{StaticResource MainColor}">
+                    <tabview:SfTabItem.Content>
+                        <Grid RowDefinitions="80,80,Auto">
+
+                            <Frame Grid.Row="0" Style="{StaticResource MyInputFrame}">
+                                <Grid ColumnDefinitions="20,*">
+                                    <Label Grid.Column="0" Text="&#xf233;" Style="{StaticResource IconLabel}" />
+                                    <inputLayout:SfTextInputLayout HelperText="Select Dev Team" Grid.Column="1">
+                                        <combobox:SfComboBox
+                                                         DataSource="{Binding Path=StaticTbl.TeamForView, Mode=OneWay}" DisplayMemberPath="TeamName"
+                                                         SuggestionMode="StartsWith" ItemPadding="2" HeightRequest="55"
+                                                         SelectedValuePath="Id"
+                                                         SelectedValue="{Binding WorkItem.DevTeam, Mode=TwoWay}">
+                                            <combobox:SfComboBox.ItemTemplate>
+                                                <DataTemplate  x:DataType="modelforview:TeamForViewNew">
+                                                    <StackLayout Orientation="Horizontal" Padding="2">
+                                                        <Label Text="{Binding TeamName}" Margin="2" />
+                                                    </StackLayout>
+                                                </DataTemplate>
+                                            </combobox:SfComboBox.ItemTemplate>
+                                        </combobox:SfComboBox>
+                                    </inputLayout:SfTextInputLayout>
+                                </Grid>
+                            </Frame>
+
+                            <Frame Grid.Row="1" Style="{StaticResource MyInputFrame}">
+                                <Grid ColumnDefinitions="20,*">
+                                    <Label Grid.Column="0" Text="&#xe799;" Style="{StaticResource IconLabel}" />
+                                    <inputLayout:SfTextInputLayout HelperText="Select Developer" Grid.Column="1">
+                                        <combobox:SfComboBox
+                                                         DataSource="{Binding Path=StaticTbl.DevelopersForView, Mode=OneWay}" DisplayMemberPath="IdEmployee"
+                                                         SuggestionMode="StartsWith" ItemPadding="2" HeightRequest="55"
+                                                         SelectedValuePath="Id"
+                                                         SelectedValue="{Binding WorkItem.Developer, Mode=TwoWay}">
+                                            <combobox:SfComboBox.ItemTemplate>
+                                                <DataTemplate  x:DataType="modelforview:DeveloperForView">
+                                                    <StackLayout Orientation="Horizontal" Padding="2">
+                                                        <Label Text="{Binding IdEmployee}" Margin="2" />
+                                                    </StackLayout>
+                                                </DataTemplate>
+                                            </combobox:SfComboBox.ItemTemplate>
+                                        </combobox:SfComboBox>
+                                    </inputLayout:SfTextInputLayout>
+                                </Grid>
+                            </Frame>
+
+                            <expander:SfExpander IsExpanded="False" Grid.Row="2">
+                                <expander:SfExpander.Header>
+                                    <Grid Margin="2" Padding="2">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="&#xef42;" Style="{StaticResource IconLabel}" />
+                                            <Label Text="Comments notebook" TextColor="#495F6E" FontSize="14" VerticalOptions="CenterAndExpand" />
+                                        </StackLayout>
+                                    </Grid>
+                                </expander:SfExpander.Header>
+                                <expander:SfExpander.Content>
+                                    <Grid ColumnDefinitions="20,*">
+                                        <Frame Grid.Row="0" Grid.Column="1" Style="{StaticResource  MyInputFrame}">
+                                            <Frame IsClippedToBounds="true"
+                                                        Padding="0" CornerRadius="15">
+                                                <Editor HorizontalOptions="Fill"
+                                                          VerticalOptions="Fill" Keyboard="Text"
+                                                          AutoSize="TextChanges"
+                                                          Placeholder="Comments"
+                                                          PlaceholderColor="{StaticResource GreenColorMy}"
+                                                          IsSpellCheckEnabled="True"
+                                                          FontSize="Small"
+                                                          Text="{Binding WorkItem.DevComment}" />
+                                            </Frame>
+                                        </Frame>
+                                    </Grid>
+                                </expander:SfExpander.Content>
+                            </expander:SfExpander>
+                        </Grid>
+                    </tabview:SfTabItem.Content>
+                </tabview:SfTabItem>
+                <tabview:SfTabItem Title="Actions"
+                                       TitleFontSize="12"
+                                       IconFont="&#xeb8e;"
+                                       FontIconFontFamily="Material"
+                                       SelectionColor="#FF00AFF0"
+                                       FontIconFontColor="{StaticResource MainColor}"
+                                       TitleFontColor="{StaticResource MainColor}">
+                    <tabview:SfTabItem.Content>
+                        <Grid RowDefinitions="150,100,200" ColumnDefinitions="200,*"
+                               Margin="2" Padding="4">
+                            <Grid Grid.Row="0">
+                                <StackLayout Orientation="Vertical" Padding="5" Spacing="1">
+                                    <Label Text="{Binding MainLabel}" Style="{StaticResource StatusLabel}" />
+                                    <segmentedcontrol:SfButton Text="{Binding WhatToDo}" ShowIcon="True" ImageSource="plus.png" CornerRadius="10"
+                                                               BackgroundColor="{StaticResource GreenColorMy}" FontAttributes="Bold"
+                                                               Command="{Binding AddOrUpdateItem }" />
+                                </StackLayout>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <StackLayout Orientation="Vertical" Padding="5">
+                                    <Label Text="Clear all" Style="{StaticResource StatusLabel}" />
+                                    <segmentedcontrol:SfButton Text="Clear Form" CornerRadius="10" FontAttributes="Bold"
+                                                               BackgroundColor="{StaticResource GrayColorMy }"
+                                                               Command="{Binding Path=ClearIteam}" />
+                                </StackLayout>
+                            </Grid>
+                            <Grid Grid.Row="2" Grid.ColumnSpan="2">
+                                <expander:SfExpander IsExpanded="False" Grid.Row="2">
+                                    <expander:SfExpander.Header>
+                                        <Grid Margin="2" Padding="2">
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="&#xef42;" Style="{StaticResource IconLabel}" />
+                                                <Label Text="Additional controls" TextColor="#495F6E" FontSize="16" VerticalOptions="CenterAndExpand" />
+                                            </StackLayout>
+                                        </Grid>
+                                    </expander:SfExpander.Header>
+                                    <expander:SfExpander.Content>
+                                        <Grid ColumnDefinitions="Auto,Auto">
+                                            <segmentedcontrol:SfButton Text="Delete Project" CornerRadius="10"
+                                                               Background="{StaticResource AccentColorMy}" FontAttributes="Bold"
+                                                                      IsEnabled="{Binding IsNew}" Command="{Binding DeleteItemCommand}" />
+                                        </Grid>
+                                    </expander:SfExpander.Content>
+                                </expander:SfExpander>
+                            </Grid>
+                        </Grid>
+                    </tabview:SfTabItem.Content>
+                </tabview:SfTabItem>
+            </tabview:SfTabView.Items>
+        </tabview:SfTabView>
+    </ContentPage.Content>
+</ContentPage>

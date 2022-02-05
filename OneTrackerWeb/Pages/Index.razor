@@ -1,0 +1,87 @@
+﻿@page "/"
+
+<MatProgressBar Progress="@Loading"></MatProgressBar>
+
+<div class="page-title" style="padding-top:10px">
+    <img src="/images/Logo500x500px.png" class="page-title-img" />
+    <span class="page-title-text"><label>Home Page</label></span>
+    <div style="clear:both; height:5px;"></div>
+</div>
+<br />
+<div class="wraper-page">
+    <div class=" col-8; offset-4">
+        <img src="/images/OneTrackerLog.png" style="width:60%;height:60%" />
+    </div>
+</div>
+<style>
+    .ulstyle {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        display: inline-block;
+        list-style-type: none !important;
+        padding-left: 0px !important;
+    }
+
+    .controlregion {
+        margin-top: 50px;
+    }
+
+    .pagecontent {
+        font-family: sans-serif !important;
+        font-size: 16px;
+        color: #333333;
+        letter-spacing: 0.34px;
+        line-height: 24px;
+        margin-top: 10px;
+    }
+
+    .list {
+        float: left;
+        line-height: 40px;
+        min-width: 280px;
+        font-family: sans-serif !important;
+        font-size: 19px;
+        color: #0073DC;
+    }
+
+    .syncfusion-blazor-index-icons {
+        font-family: "sbicons";
+        color: #0073DC !important;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        padding-right: 13px;
+        font-size: 18px;
+    }
+
+    .productheader {
+        font-family: sans-serif !important;
+        font-size: 19px !important;
+        color: #333333 !important;
+        letter-spacing: 0.41px;
+    }
+
+    .pageheader {
+        font-family: sans-serif !important;
+        font-size: 24px !important;
+        color: #333333;
+        font-weight: bold !important;
+    }
+</style>
+
+@code {
+    private int loading = 1;
+    public float Loading { get => loading / 100; }
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadMore();
+    }
+    public async Task LoadMore()
+    {
+        for (loading = 1; loading < 100; loading++)
+        {
+            Task.Delay(1000);
+        }
+    }
+}

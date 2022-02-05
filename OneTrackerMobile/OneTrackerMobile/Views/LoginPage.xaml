@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:viewmodel="clr-namespace:OneTrackerMobile.ViewModels"
+             x:DataType="viewmodel:LoginViewModel"
+             mc:Ignorable="d"
+             x:Class="OneTrackerMobile.Views.LoginPage"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="0" Padding="10,0,10,0" VerticalOptions="Center">
+                <Image Source="https://cdn-icons-png.flaticon.com/512/1000/1000946.png"
+                       WidthRequest="80" HeightRequest="80" Margin="5,10" />
+                <Label Text="Company ID" Background="{StaticResource LogoColor}"
+                   TextColor="WhiteSmoke" Margin="1" FontSize="17" Padding="2"
+                   VerticalTextAlignment="Center" />
+                <Entry Text="{Binding Path=CompanyID, Mode=TwoWay}" />
+                <Label Text="App ID" Background="{StaticResource LogoColor}"
+                   TextColor="WhiteSmoke" Margin="4"  FontSize="17" Padding="2"
+                   VerticalTextAlignment="Center" />
+                <Entry IsPassword="False" Text="{Binding Path=AppID, Mode=TwoWay}" />
+                <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommandAsync}" HorizontalOptions="Center" />
+            </StackLayout>
+            <Grid Grid.Row="1" Margin="2,15">
+                <Label Text="{Binding LoginMessage, Mode=OneWay}" TextColor="PaleVioletRed" Padding="2" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>  
